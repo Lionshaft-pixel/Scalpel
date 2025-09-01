@@ -1,6 +1,6 @@
 # 🪓 Scalpel - Advanced Bulk File Renamer
 
-![Scalpel Banner](https://Lionshaft-pixel.githubusercontent.com/.../Scalpel_logo.png)
+![Scalpel Banner](https://glitchyn.online/images/Github%20Readme%20Image/Scalpel_logo.png)
 
 A powerful, browser-based bulk file renaming tool with advanced customization options and a sleek, modern interface.
 
