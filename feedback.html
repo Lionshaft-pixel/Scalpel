@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Feedback</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4e54c8;
+            --primary-dark: #3a3fb8;
+            --secondary: #8a64d6;
+            --accent: #ff6b6b;
+            --text: #333;
+            --text-light: #666;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --success: #4caf50;
+            --error: #f44336;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg) 0%, #c3cfe2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(30deg);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .feedback-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 30px;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .rating-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .rating-input {
+            display: none;
+        }
+
+        .rating-label {
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f0f0;
+            color: var(--text-light);
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .rating-input:checked + .rating-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .rating-label:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 112, 186, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .character-count {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .success-message {
+            display: none;
+            background: var(--success);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--text-light);
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .feedback-card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .rating-label {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background: #222;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 2px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: -20px -20px 30px -20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        .nav-link {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #4cafef;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Logo" class="nav-logo">
+            </a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="donate.html" class="nav-link">Donate</a>
+            <a href="https://guns.lol/lionshaft" class="nav-link">About the Creator</a>
+            <a href="feedback.html" class="nav-link">Feedback</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header>
+            <h1>Share Your Feedback</h1>
+            <p class="subtitle">We value your opinion and would love to hear about your experience with us.</p>
+        </header>
+
+        <div class="feedback-card">
+            <form id="feedbackForm" action="https://formspree.io/f/xqadlqwe" method="POST">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">How would you rate your experience?</label>
+                    <div class="rating-group">
+                        <input type="radio" id="rating1" name="rating" value="1" class="rating-input">
+                        <label for="rating1" class="rating-label">1</label>
+                        
+                        <input type="radio" id="rating2" name="rating" value="2" class="rating-input">
+                        <label for="rating2" class="rating-label">2</label>
+                        
+                        <input type="radio" id="rating3" name="rating" value="3" class="rating-input">
+                        <label for="rating3" class="rating-label">3</label>
+                        
+                        <input type="radio" id="rating4" name="rating" value="4" class="rating-input">
+                        <label for="rating4" class="rating-label">4</label>
+                        
+                        <input type="radio" id="rating5" name="rating" value="5" class="rating-input">
+                        <label for="rating5" class="rating-label">5</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-control" placeholder="What is your feedback about?">
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Your Feedback</label>
+                    <textarea id="message" name="message" class="form-control" placeholder="Please share your thoughts in detail..."></textarea>
+                    <div class="character-count"><span id="charCount">0</span>/500 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="contactPermission" name="contactPermission" class="checkbox-input">
+                        <label for="contactPermission" class="form-label">I agree to be contacted for follow-up on my feedback</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Feedback
+                </button>
+            </form>
+
+            <div id="successMessage" class="success-message">
+                <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                <h2>Thank You for Your Feedback!</h2>
+                <p>We appreciate you taking the time to share your thoughts with us.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>We read all feedback carefully and use it to improve our services.</p>
+        <p>© 2025 Your Organization Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Character count for feedback textarea
+        const messageTextarea = document.getElementById('message');
+        const charCount = document.getElementById('charCount');
+        
+        messageTextarea.addEventListener('input', () => {
+            const length = messageTextarea.value.length;
+            charCount.textContent = length;
+            
+            if (length > 500) {
+                charCount.style.color = 'var(--error)';
+            } else {
+                charCount.style.color = 'var(--text-light)';
+            }
+        });
+        
+        // Form submission handling
+        const feedbackForm = document.getElementById('feedbackForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        feedbackForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(feedbackForm);
+            
+            try {
+                // This would be replaced with your Formspree endpoint
+                const response = await fetch(feedbackForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    feedbackForm.reset();
+                    charCount.textContent = '0';
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                alert('There was a problem submitting your feedback. Please try again.');
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

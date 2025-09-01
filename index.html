@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalpel - Advanced Bulk File Renamer</title>
+    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="images/logo.png" alt="Logo" href="index.html" class="nav-logo">
+            <a href="donate.html" class="nav-link">Donate</a>
+            <a href="https://guns.lol/lionshaft" class="nav-link">About the Creator</a>
+            <a href="feedback.html" class="nav-link">Feedback</a>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <header>
+            <h1>Scalpel</h1>
+            <p class="tagline">Advanced bulk file renaming with precision</p>
+        </header>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <!-- Drop Zone for dragging files -->
+                <div class="drop-zone" id="dropZone">
+                    <svg class="icon icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Drag & Drop your files here</p>
+                    <p>or</p>
+                    <button class="browse-btn" id="browseBtn">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        Browse Files
+                    </button>
+                    <input type="file" id="fileInput" multiple class="file-input">
+                </div>
+
+                <div class="file-count" id="fileCount">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                        <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    <span>No files selected</span>
+                </div>
+
+                <!-- Options for the user to set the new name -->
+                <div class="options" id="optionsSection">
+                    <div class="option-group">
+                        <div class="option-title">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            Naming Pattern
+                        </div>
+                        <label for="baseName">Base Name:</label>
+                        <input type="text" id="baseName" placeholder="e.g., my_vacation">
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="addNumbering" checked>
+                                Add Numbering (01, 02, 03...)
+                            </label>
+                        </div>
+
+                        <div id="numberingOptions">
+                            <label for="startNumber">Start Number:</label>
+                            <input type="number" id="startNumber" value="1" min="1">
+
+                            <label for="numberDigits">Number of Digits:</label>
+                            <input type="number" id="numberDigits" value="2" min="1" max="10">
+
+                            <label for="numberSeparator">Separator:</label>
+                            <input type="text" id="numberSeparator" value="_" maxlength="3">
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option-title">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Additional Options
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="changeExtension">
+                                Change file extension
+                            </label>
+                        </div>
+
+                        <div id="extensionOptions">
+                            <label for="newExtension">New Extension:</label>
+                            <input type="text" id="newExtension" placeholder="e.g., jpg">
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="addPrefix">
+                                Add Prefix
+                            </label>
+                        </div>
+
+                        <div id="prefixOptions">
+                            <label for="prefixText">Prefix Text:</label>
+                            <input type="text" id="prefixText" placeholder="e.g., IMG_">
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="addSuffix">
+                                Add Suffix
+                            </label>
+                        </div>
+
+                        <div id="suffixOptions">
+                            <label for="suffixText">Suffix Text:</label>
+                            <input type="text" id="suffixText" placeholder="e.g., _edited">
+                        </div>
+                    </div>
+
+                    <button class="toggle-advanced" id="toggleAdvanced">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        Advanced Options
+                    </button>
+
+                    <div class="advanced-options" id="advancedOptions">
+                        <div class="option-group">
+                            <div class="option-title">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                                Text Modification
+                            </div>
+
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="convertCase">
+                                    Convert Case
+                                </label>
+                            </div>
+
+                            <div id="caseOptions">
+                                <label for="caseType">Case Type:</label>
+                                <select id="caseType">
+                                    <option value="lowercase">lowercase</option>
+                                    <option value="UPPERCASE">UPPERCASE</option>
+                                    <option value="Title Case">Title Case</option>
+                                    <option value="Sentence case">Sentence case</option>
+                                </select>
+                            </div>
+
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="findReplace">
+                                    Find and Replace
+                                </label>
+                            </div>
+
+                            <div id="findReplaceOptions">
+                                <label for="findText">Find:</label>
+                                <input type="text" id="findText" placeholder="Text to find">
+
+                                <label for="replaceText">Replace With:</label>
+                                <input type="text" id="replaceText" placeholder="Replacement text">
+
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="matchCase">
+                                        Match case
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <div class="option-title">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                                </svg>
+                                Sorting
+                            </div>
+
+                            <label for="sortOrder">Sort Files By:</label>
+                            <select id="sortOrder">
+                                <option value="original">Original Order</option>
+                                <option value="name">Name (A-Z)</option>
+                                <option value="nameDesc">Name (Z-A)</option>
+                                <option value="size">Size (Smallest First)</option>
+                                <option value="sizeDesc">Size (Largest First)</option>
+                                <option value="type">File Type</option>
+                                <option value="date">Date Modified (Oldest First)</option>
+                                <option value="dateDesc">Date Modified (Newest First)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="preview-container">
+                    <div class="preview-header">
+                        <span>Preview</span>
+                        <span id="previewCount">0 files</span>
+                    </div>
+                    <div class="preview-content" id="previewArea">
+                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
+                            Files will appear here after selection
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="processBtn" class="btn btn-primary btn-lg btn-full" disabled>
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Process & Download
+                    </button>
+                    <button id="resetBtn" class="btn btn-danger">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Main application class
+        class ScalpelApp {
+            constructor() {
+                this.files = [];
+                this.initializeElements();
+                this.bindEvents();
+                this.setupOptionToggles();
+            }
+
+            initializeElements() {
+                // UI Elements
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.browseBtn = document.getElementById('browseBtn');
+                this.optionsSection = document.getElementById('optionsSection');
+                this.previewArea = document.getElementById('previewArea');
+                this.processBtn = document.getElementById('processBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.fileCount = document.getElementById('fileCount');
+                this.previewCount = document.getElementById('previewCount');
+                this.toast = document.getElementById('toast');
+
+                // Option elements
+                this.baseNameInput = document.getElementById('baseName');
+                this.addNumberingCheckbox = document.getElementById('addNumbering');
+                this.startNumberInput = document.getElementById('startNumber');
+                this.numberDigitsInput = document.getElementById('numberDigits');
+                this.numberSeparatorInput = document.getElementById('numberSeparator');
+                this.changeExtensionCheckbox = document.getElementById('changeExtension');
+                this.newExtensionInput = document.getElementById('newExtension');
+                this.addPrefixCheckbox = document.getElementById('addPrefix');
+                this.prefixTextInput = document.getElementById('prefixText');
+                this.addSuffixCheckbox = document.getElementById('addSuffix');
+                this.suffixTextInput = document.getElementById('suffixText');
+                this.convertCaseCheckbox = document.getElementById('convertCase');
+                this.caseTypeSelect = document.getElementById('caseType');
+                this.findReplaceCheckbox = document.getElementById('findReplace');
+                this.findTextInput = document.getElementById('findText');
+                this.replaceTextInput = document.getElementById('replaceText');
+                this.matchCaseCheckbox = document.getElementById('matchCase');
+                this.sortOrderSelect = document.getElementById('sortOrder');
+
+                // Advanced options
+                this.toggleAdvancedBtn = document.getElementById('toggleAdvanced');
+                this.advancedOptions = document.getElementById('advancedOptions');
+                this.numberingOptions = document.getElementById('numberingOptions');
+                this.extensionOptions = document.getElementById('extensionOptions');
+                this.prefixOptions = document.getElementById('prefixOptions');
+                this.suffixOptions = document.getElementById('suffixOptions');
+                this.caseOptions = document.getElementById('caseOptions');
+                this.findReplaceOptions = document.getElementById('findReplaceOptions');
+            }
+
+            bindEvents() {
+                // File selection
+                this.browseBtn.addEventListener('click', () => this.fileInput.click());
+                this.fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+
+                // Drag and drop
+                this.dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.add('dragover');
+                });
+
+                this.dropZone.addEventListener('dragleave', () => {
+                    this.dropZone.classList.remove('dragover');
+                });
+
+                this.dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.remove('dragover');
+                    this.handleFiles(e.dataTransfer.files);
+                });
+
+                // Options changes
+                this.baseNameInput.addEventListener('input', () => this.updatePreview());
+                this.addNumberingCheckbox.addEventListener('change', () => this.updatePreview());
+                this.startNumberInput.addEventListener('input', () => this.updatePreview());
+                this.numberDigitsInput.addEventListener('input', () => this.updatePreview());
+                this.numberSeparatorInput.addEventListener('input', () => this.updatePreview());
+                this.changeExtensionCheckbox.addEventListener('change', () => this.toggleExtensionOptions());
+                this.newExtensionInput.addEventListener('input', () => this.updatePreview());
+                this.addPrefixCheckbox.addEventListener('change', () => this.togglePrefixOptions());
+                this.prefixTextInput.addEventListener('input', () => this.updatePreview());
+                this.addSuffixCheckbox.addEventListener('change', () => this.toggleSuffixOptions());
+                this.suffixTextInput.addEventListener('input', () => this.updatePreview());
+                this.convertCaseCheckbox.addEventListener('change', () => this.toggleCaseOptions());
+                this.caseTypeSelect.addEventListener('change', () => this.updatePreview());
+                this.findReplaceCheckbox.addEventListener('change', () => this.toggleFindReplaceOptions());
+                this.findTextInput.addEventListener('input', () => this.updatePreview());
+                this.replaceTextInput.addEventListener('input', () => this.updatePreview());
+                this.matchCaseCheckbox.addEventListener('change', () => this.updatePreview());
+                this.sortOrderSelect.addEventListener('change', () => this.sortFiles());
+
+                // Action buttons
+                this.processBtn.addEventListener('click', () => this.processFiles());
+                this.resetBtn.addEventListener('click', () => this.resetApp());
+            }
+
+            setupOptionToggles() {
+                // Advanced options toggle
+                this.toggleAdvancedBtn.addEventListener('click', () => {
+                    const isHidden = this.advancedOptions.style.display === 'none';
+                    this.advancedOptions.style.display = isHidden ? 'block' : 'none';
+
+                    this.toggleAdvancedBtn.innerHTML = `
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="${isHidden ? '18 15 12 9 6 15' : '6 9 12 15 18 9'}"></polyline>
+                        </svg>
+                        ${isHidden ? 'Hide Advanced Options' : 'Advanced Options'}
+                    `;
+                });
+
+                // Option toggles
+                this.addNumberingCheckbox.addEventListener('change', () => {
+                    this.numberingOptions.style.display = this.addNumberingCheckbox.checked ? 'block' : 'none';
+                });
+
+                this.changeExtensionCheckbox.addEventListener('change', () => {
+                    this.extensionOptions.style.display = this.changeExtensionCheckbox.checked ? 'block' : 'none';
+                });
+
+                this.addPrefixCheckbox.addEventListener('change', () => {
+                    this.prefixOptions.style.display = this.addPrefixCheckbox.checked ? 'block' : 'none';
+                });
+
+                this.addSuffixCheckbox.addEventListener('change', () => {
+                    this.suffixOptions.style.display = this.addSuffixCheckbox.checked ? 'block' : 'none';
+                });
+
+                this.convertCaseCheckbox.addEventListener('change', () => {
+                    this.caseOptions.style.display = this.convertCaseCheckbox.checked ? 'block' : 'none';
+                });
+
+                this.findReplaceCheckbox.addEventListener('change', () => {
+                    this.findReplaceOptions.style.display = this.findReplaceCheckbox.checked ? 'block' : 'none';
+                });
+
+                // Initialize visibility states
+                this.numberingOptions.style.display = this.addNumberingCheckbox.checked ? 'block' : 'none';
+                this.extensionOptions.style.display = 'none';
+                this.prefixOptions.style.display = 'none';
+                this.suffixOptions.style.display = 'none';
+                this.caseOptions.style.display = 'none';
+                this.findReplaceOptions.style.display = 'none';
+                this.advancedOptions.style.display = 'none';
+            }
+
+            toggleExtensionOptions() {
+                this.extensionOptions.style.display = this.changeExtensionCheckbox.checked ? 'block' : 'none';
+                this.updatePreview();
+            }
+
+            togglePrefixOptions() {
+                this.prefixOptions.style.display = this.addPrefixCheckbox.checked ? 'block' : 'none';
+                this.updatePreview();
+            }
+
+            toggleSuffixOptions() {
+                this.suffixOptions.style.display = this.addSuffixCheckbox.checked ? 'block' : 'none';
+                this.updatePreview();
+            }
+
+            toggleCaseOptions() {
+                this.caseOptions.style.display = this.convertCaseCheckbox.checked ? 'block' : 'none';
+                this.updatePreview();
+            }
+
+            toggleFindReplaceOptions() {
+                this.findReplaceOptions.style.display = this.findReplaceCheckbox.checked ? 'block' : 'none';
+                this.updatePreview();
+            }
+
+            handleFiles(fileList) {
+                if (!fileList || fileList.length === 0) return;
+
+                // Convert FileList to Array and add to our files
+                const newFiles = Array.from(fileList);
+                this.files = [...this.files, ...newFiles];
+
+                // Show options section if we have files
+                if (this.files.length > 0) {
+                    this.optionsSection.style.display = 'block';
+                    this.dropZone.classList.add('file-added');
+                    setTimeout(() => {
+                        this.dropZone.classList.remove('file-added');
+                    }, 1000);
+                }
+
+                // Update file count
+                this.updateFileCount();
+
+                // Sort files based on current selection
+                this.sortFiles();
+
+                // Generate preview
+                this.updatePreview();
+
+                // Enable process button
+                this.processBtn.disabled = false;
+
+                // Show success message
+                this.showToast(`Added ${newFiles.length} file(s)`);
+            }
+
+            updateFileCount() {
+                const count = this.files.length;
+                this.fileCount.querySelector('span').textContent = `${count} file${count !== 1 ? 's' : ''} selected`;
+                this.previewCount.textContent = `${count} file${count !== 1 ? 's' : ''}`;
+            }
+
+            sortFiles() {
+                const sortBy = this.sortOrderSelect.value;
+
+                switch (sortBy) {
+                    case 'name':
+                        this.files.sort((a, b) => a.name.localeCompare(b.name));
+                        break;
+                    case 'nameDesc':
+                        this.files.sort((a, b) => b.name.localeCompare(a.name));
+                        break;
+                    case 'size':
+                        this.files.sort((a, b) => a.size - b.size);
+                        break;
+                    case 'sizeDesc':
+                        this.files.sort((a, b) => b.size - a.size);
+                        break;
+                    case 'type':
+                        this.files.sort((a, b) => {
+                            const extA = a.name.split('.').pop() || '';
+                            const extB = b.name.split('.').pop() || '';
+                            return extA.localeCompare(extB);
+                        });
+                        break;
+                    case 'date':
+                        this.files.sort((a, b) => a.lastModified - b.lastModified);
+                        break;
+                    case 'dateDesc':
+                        this.files.sort((a, b) => b.lastModified - a.lastModified);
+                        break;
+                    // 'original' keeps the current order
+                }
+
+                this.updatePreview();
+            }
+
+            generateNewFilename(originalName, index) {
+                let newName = '';
+                const baseName = this.baseNameInput.value || 'file';
+                const extension = originalName.split('.').pop();
+
+                // Add prefix if enabled
+                if (this.addPrefixCheckbox.checked && this.prefixTextInput.value) {
+                    newName += this.prefixTextInput.value;
+                }
+
+                // Add base name
+                newName += baseName;
+
+                // Add numbering if enabled
+                if (this.addNumberingCheckbox.checked) {
+                    const startNum = parseInt(this.startNumberInput.value) || 1;
+                    const numDigits = parseInt(this.numberDigitsInput.value) || 2;
+                    const separator = this.numberSeparatorInput.value || '_';
+                    const number = (startNum + index).toString().padStart(numDigits, '0');
+                    newName += separator + number;
+                }
+
+                // Add suffix if enabled
+                if (this.addSuffixCheckbox.checked && this.suffixTextInput.value) {
+                    newName += this.suffixTextInput.value;
+                }
+
+                // Apply find and replace if enabled
+                if (this.findReplaceCheckbox.checked && this.findTextInput.value) {
+                    const findText = this.findTextInput.value;
+                    const replaceText = this.replaceTextInput.value || '';
+                    const flags = this.matchCaseCheckbox.checked ? 'g' : 'gi';
+                    const regex = new RegExp(findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                    newName = newName.replace(regex, replaceText);
+                }
+
+                // Apply case conversion if enabled
+                if (this.convertCaseCheckbox.checked) {
+                    const caseType = this.caseTypeSelect.value;
+                    switch (caseType) {
+                        case 'lowercase':
+                            newName = newName.toLowerCase();
+                            break;
+                        case 'UPPERCASE':
+                            newName = newName.toUpperCase();
+                            break;
+                        case 'Title Case':
+                            newName = newName.replace(/\w\S*/g, (txt) => {
+                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                            });
+                            break;
+                        case 'Sentence case':
+                            newName = newName.charAt(0).toUpperCase() + newName.slice(1).toLowerCase();
+                            break;
+                    }
+                }
+
+                // Add extension
+                const newExtension = this.changeExtensionCheckbox.checked && this.newExtensionInput.value
+                    ? this.newExtensionInput.value
+                    : extension;
+
+                newName += '.' + newExtension;
+
+                return newName;
+            }
+
+            updatePreview() {
+                if (this.files.length === 0) {
+                    this.previewArea.innerHTML = `
+                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
+                            Files will appear here after selection
+                        </div>
+                    `;
+                    return;
+                }
+
+                let previewHTML = '';
+
+                this.files.forEach((file, index) => {
+                    const newName = this.generateNewFilename(file.name, index);
+
+                    previewHTML += `
+                        <div class="file-preview">
+                            <div class="original-name" title="${file.name}">${file.name}</div>
+                            <div class="new-name" title="${newName}">${newName}</div>
+                        </div>
+                    `;
+                });
+
+                this.previewArea.innerHTML = previewHTML;
+            }
+
+            async processFiles() {
+                if (this.files.length === 0) {
+                    this.showToast('No files to process', 'error');
+                    return;
+                }
+
+                try {
+                    this.processBtn.disabled = true;
+                    this.processBtn.innerHTML = `
+                        <svg class="icon spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                        Processing...
+                    `;
+
+                    this.processBtn.disabled = true;
+                    this.processBtn.textContent = "Processing...";
+
+                    // after zip is ready
+                    this.processBtn.disabled = false;
+                    this.processBtn.textContent = "Process & Download";
+
+                    // real ZIP generation
+                    const zip = new JSZip();
+
+                    for (let i = 0; i < this.files.length; i++) {
+                        const file = this.files[i];
+                        const newName = this.generateNewFilename(file.name, i);
+
+                        // keep the original file bytes, just rename inside zip
+                        const data = await file.arrayBuffer();
+                        zip.file(newName, data);
+                    }
+
+                    const blob = await zip.generateAsync({ type: "blob" });
+                    const a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+
+                    // optional: include base name in the zip filename
+                    const base = (this.baseNameInput.value || "renamed").replace(/\s+/g, "_");
+                    a.download = `${base}_${Date.now()}.zip`;
+
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(a.href);
+
+                    this.showToast("The download has started!", "success");
+
+
+                } catch (error) {
+                    console.error('Error processing files:', error);
+                    this.showToast('Error processing files', 'error');
+                    this.processBtn.innerHTML = `
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Process & Download
+                    `;
+                    this.processBtn.disabled = false;
+                }
+            }
+
+            resetApp() {
+                this.files = [];
+                this.fileInput.value = '';
+                this.optionsSection.style.display = 'none';
+                this.previewArea.innerHTML = `
+                    <div style="color: #7f8c8d; text-align: center; padding: 20px;">
+                        Files will appear here after selection
+                    </div>
+                `;
+                this.processBtn.disabled = true;
+                this.updateFileCount();
+
+                // Reset form fields
+                this.baseNameInput.value = '';
+                this.addNumberingCheckbox.checked = true;
+                this.startNumberInput.value = 1;
+                this.numberDigitsInput.value = 2;
+                this.numberSeparatorInput.value = '_';
+                this.changeExtensionCheckbox.checked = false;
+                this.newExtensionInput.value = '';
+                this.addPrefixCheckbox.checked = false;
+                this.prefixTextInput.value = '';
+                this.addSuffixCheckbox.checked = false;
+                this.suffixTextInput.value = '';
+                this.convertCaseCheckbox.checked = false;
+                this.caseTypeSelect.value = 'lowercase';
+                this.findReplaceCheckbox.checked = false;
+                this.findTextInput.value = '';
+                this.replaceTextInput.value = '';
+                this.matchCaseCheckbox.checked = false;
+                this.sortOrderSelect.value = 'original';
+
+                // Hide advanced options
+                this.advancedOptions.style.display = 'none';
+                this.toggleAdvancedBtn.innerHTML = `
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                    Advanced Options
+                `;
+
+                this.showToast('Application reset');
+            }
+
+            showToast(message, type = 'info') {
+                this.toast.textContent = message;
+                this.toast.className = `toast ${type}`;
+                this.toast.classList.add('show');
+
+                setTimeout(() => {
+                    this.toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Initialize the application when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ScalpelApp();
+        });
+    </script>
+    <footer>Made with &#129505; by Lionshaft.</footer>
+</body>
+
+</html>
