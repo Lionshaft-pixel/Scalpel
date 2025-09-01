@@ -1,6 +1,6 @@
 # 🪓 Scalpel - Advanced Bulk File Renamer
 
-
+![Scalpel Banner](https://glitchyn.online/images/Scalpel_logo.png)
 
 A powerful, browser-based bulk file renaming tool with advanced customization options and a sleek, modern interface.
 
