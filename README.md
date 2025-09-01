@@ -41,11 +41,11 @@ No installation required! Simply download the HTML file and open it in your brow
 For developers who want to extend the functionality:
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/scalpel.git
+# Clone this repo :
+git clone https://github.com/Lionshaft-pixel/scalpel.git
 
-# Navigate to the project directory
+# Then Navigate to this directory :
 cd scalpel
 
-# Open the application
+# That's it! Open index.html :
 open index.html
