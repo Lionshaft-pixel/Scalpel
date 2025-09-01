@@ -1,4 +1,4 @@
-# 🪓 Scalpel - Advanced Bulk File Renamer
+#  Scalpel - Advanced Bulk File Renamer
 
 ![Scalpel Banner](https://glitchyn.online/images/Scalpel_logo.png)
 
@@ -6,7 +6,7 @@ A powerful, browser-based bulk file renaming tool with advanced customization op
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Drag & Drop Interface** – Easily add files by dragging them into the browser  
 - **Advanced Renaming Options:**
@@ -23,7 +23,7 @@ A powerful, browser-based bulk file renaming tool with advanced customization op
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 1. Download the `index.html` file  
 2. Open it in any modern browser  
@@ -34,7 +34,7 @@ A powerful, browser-based bulk file renaming tool with advanced customization op
 
 ---
 
-## 📦 Installation
+##  Installation
 
 No installation required! Simply download the HTML file and open it in your browser.  
 
