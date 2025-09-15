@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Scalpel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --primary-light: rgba(52, 152, 219, 0.2);
+            --secondary: #27ae60;
+            --secondary-dark: #219653;
+            --dark: #0a1929;
+            --darker: #07121e;
+            --dark-light: #132842;
+            --light: #ecf0f1;
+            --gray: #7f8c8d;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-light: 0 4px 12px rgba(52, 152, 219, 0.2);
+            --transition: all 0.3s ease;
+            --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
+            --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            border-bottom: var(--crystal-border);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Thank you content */
+        .thank-you-container {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .thank-you-icon {
+            font-size: 5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .thank-you-message {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Ad container */
+        .ad-container {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 25px;
+            border: var(--crystal-border);
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .ad-label {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .ad-content {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .ad-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .ad-description {
+            color: var(--gray);
+            margin-bottom: 25px;
+            max-width: 500px;
+        }
+
+        .ad-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-light);
+        }
+
+        .ad-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Download section */
+        .download-section {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+            border: var(--crystal-border);
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .download-ready {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .download-text {
+            font-size: 1.3rem;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .download-info {
+            color: var(--gray);
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .footer-nav a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav-left,
+            .nav-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .thank-you-icon {
+                font-size: 4rem;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Countdown */
+        .countdown {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <br><div class="logo-text">Scalpel</div>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="learn-more.html" class="nav-link">How It Works</a>
+            <a href="privacy.html" class="nav-link">Privacy Policy</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="thank-you-container">
+            <div class="thank-you-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <h1>Thank You!</h1>
+
+            <p class="thank-you-message">
+                Your files have been processed successfully. Thank you for using Glitchyn.
+                Your download will start automatically in a few seconds.
+            </p>
+
+            <!-- Ad Container -->
+            <div class="ad-container">
+                <div class="ad-label">ADVERTISEMENT</div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-nav">
+            <a href="index.html">Home</a>
+            <a href="learn-more.html">How It Works</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <p>&copy; 2025 Scalpel. All Rights Reserved.</p>
+        <p>Your privacy is protected. We never store your files on our servers.</p>
+    </footer>
+
+    <script>
+        // Thank you page script (no countdown, reliable download)
+        document.addEventListener('DOMContentLoaded', function () {
+            const downloadURL = localStorage.getItem('downloadURL');
+            const downloadFilename = localStorage.getItem('downloadFilename');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            // Check if the downloadURL is a blob/object URL (starts with blob:)
+            const isBlobUrl = downloadURL && downloadURL.startsWith('blob:');
+
+            if (downloadURL && downloadFilename && !isBlobUrl) {
+                // Set download button attributes for valid URLs
+                downloadBtn.href = downloadURL;
+                downloadBtn.download = downloadFilename;
+                downloadBtn.disabled = false;
+            } else {
+                // Disable button and show message
+                downloadBtn.disabled = true;
+                downloadBtn.style.opacity = '0.6';
+                downloadBtn.style.cursor = 'not-allowed';
+                downloadBtn.textContent = 'Download Unavailable';
+                const info = document.createElement('div');
+                info.style.color = '#e74c3c';
+                info.style.marginTop = '20px';
+                info.textContent = 'Re-download is not available after redirect. Please process your files again.';
+                document.querySelector('.download-section').appendChild(info);
+            }
+        });
+    </script>
+    <!--
+    Quick Guide: How to Add Ads to Your Website
+    -------------------------------------------
+    1. Sign up for an ad network (e.g., Google AdSense: https://www.google.com/adsense/start/)
+    2. Get your ad code (usually a <script> or <ins> tag from the network dashboard)
+    3. Paste the ad code into your HTML where you want the ad to appear (e.g., inside <div class="ad-container">)
+    4. Make sure your site complies with the ad network's policies.
+    5. Wait for approval and ads will start showing automatically.
+    Example:
+    <div class="ad-container">
+     <!-- Google AdSense code here -->
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+     <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"></ins>
+     <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+     </script>
+    </div>
+    -->
+</body>
+
+</html>

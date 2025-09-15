@@ -104,8 +104,34 @@ function updatePreview() {
 // 6. MAKE THE "PROCESS & DOWNLOAD" BUTTON WORK
 // This is the final, main function that does the renaming and gives the user a ZIP
 processBtn.addEventListener('click', async () => {
-    // We will write this function in the NEXT STEP.
-    // For now, let's just check that it's connected.
-    console.log("Process button was clicked!");
-    alert("The Process button is connected. The renaming logic will go here in the next step.");
+    if (selectedFiles.length === 0) {
+        alert('Please select files to process.');
+        return;
+    }
+
+    // Simulate creating a ZIP file and getting a download URL
+    const downloadURL = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'; // Replace with actual ZIP URL
+    const downloadFilename = 'renamed_files.zip';
+
+    // Store download info in localStorage for thank-you.html
+    localStorage.setItem('downloadURL', downloadURL);
+    localStorage.setItem('downloadFilename', downloadFilename);
+
+    // Try to trigger download
+    try {
+        const a = document.createElement('a');
+        a.href = downloadURL;
+        a.download = downloadFilename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } catch (e) {
+        // If download fails, just continue
+    }
+
+    // Always redirect after 1 second
+    setTimeout(() => {
+        window.location.href = 'thank-you.html';
+    }, 1000);
 });

@@ -1,736 +1,877 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scalpel - Advanced Bulk File Renamer</title>
-    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <img src="images/logo.png" alt="Logo" href="index.html" class="nav-logo">
-            <a href="donate.html" class="nav-link">Donate</a>
-            <a href="https://guns.lol/lionshaft" class="nav-link">About the Creator</a>
-            <a href="feedback.html" class="nav-link">Feedback</a>
-        </div>
-    </nav>
-
-
-    <div class="container">
-        <header>
-            <h1>Scalpel</h1>
-            <p class="tagline">Advanced bulk file renaming with precision</p>
-        </header>
-
-        <div class="main-content">
-            <div class="left-panel">
-                <!-- Drop Zone for dragging files -->
-                <div class="drop-zone" id="dropZone">
-                    <svg class="icon icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                    </svg>
-                    <p>Drag & Drop your files here</p>
-                    <p>or</p>
-                    <button class="browse-btn" id="browseBtn">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                            <polyline points="13 2 13 9 20 9"></polyline>
-                        </svg>
-                        Browse Files
-                    </button>
-                    <input type="file" id="fileInput" multiple class="file-input">
-                </div>
-
-                <div class="file-count" id="fileCount">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                        <polyline points="13 2 13 9 20 9"></polyline>
-                    </svg>
-                    <span>No files selected</span>
-                </div>
-
-                <!-- Options for the user to set the new name -->
-                <div class="options" id="optionsSection">
-                    <div class="option-group">
-                        <div class="option-title">
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                                <polyline points="13 2 13 9 20 9"></polyline>
-                            </svg>
-                            Naming Pattern
-                        </div>
-                        <label for="baseName">Base Name:</label>
-                        <input type="text" id="baseName" placeholder="e.g., my_vacation">
-
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" id="addNumbering" checked>
-                                Add Numbering (01, 02, 03...)
-                            </label>
-                        </div>
-
-                        <div id="numberingOptions">
-                            <label for="startNumber">Start Number:</label>
-                            <input type="number" id="startNumber" value="1" min="1">
-
-                            <label for="numberDigits">Number of Digits:</label>
-                            <input type="number" id="numberDigits" value="2" min="1" max="10">
-
-                            <label for="numberSeparator">Separator:</label>
-                            <input type="text" id="numberSeparator" value="_" maxlength="3">
-                        </div>
-                    </div>
-
-                    <div class="option-group">
-                        <div class="option-title">
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="16"></line>
-                                <line x1="8" y1="12" x2="16" y2="12"></line>
-                            </svg>
-                            Additional Options
-                        </div>
-
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" id="changeExtension">
-                                Change file extension
-                            </label>
-                        </div>
-
-                        <div id="extensionOptions">
-                            <label for="newExtension">New Extension:</label>
-                            <input type="text" id="newExtension" placeholder="e.g., jpg">
-                        </div>
-
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" id="addPrefix">
-                                Add Prefix
-                            </label>
-                        </div>
-
-                        <div id="prefixOptions">
-                            <label for="prefixText">Prefix Text:</label>
-                            <input type="text" id="prefixText" placeholder="e.g., IMG_">
-                        </div>
-
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" id="addSuffix">
-                                Add Suffix
-                            </label>
-                        </div>
-
-                        <div id="suffixOptions">
-                            <label for="suffixText">Suffix Text:</label>
-                            <input type="text" id="suffixText" placeholder="e.g., _edited">
-                        </div>
-                    </div>
-
-                    <button class="toggle-advanced" id="toggleAdvanced">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                        Advanced Options
-                    </button>
-
-                    <div class="advanced-options" id="advancedOptions">
-                        <div class="option-group">
-                            <div class="option-title">
-                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                                </svg>
-                                Text Modification
-                            </div>
-
-                            <div class="checkbox-group">
-                                <label>
-                                    <input type="checkbox" id="convertCase">
-                                    Convert Case
-                                </label>
-                            </div>
-
-                            <div id="caseOptions">
-                                <label for="caseType">Case Type:</label>
-                                <select id="caseType">
-                                    <option value="lowercase">lowercase</option>
-                                    <option value="UPPERCASE">UPPERCASE</option>
-                                    <option value="Title Case">Title Case</option>
-                                    <option value="Sentence case">Sentence case</option>
-                                </select>
-                            </div>
-
-                            <div class="checkbox-group">
-                                <label>
-                                    <input type="checkbox" id="findReplace">
-                                    Find and Replace
-                                </label>
-                            </div>
-
-                            <div id="findReplaceOptions">
-                                <label for="findText">Find:</label>
-                                <input type="text" id="findText" placeholder="Text to find">
-
-                                <label for="replaceText">Replace With:</label>
-                                <input type="text" id="replaceText" placeholder="Replacement text">
-
-                                <div class="checkbox-group">
-                                    <label>
-                                        <input type="checkbox" id="matchCase">
-                                        Match case
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="option-group">
-                            <div class="option-title">
-                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="3" y1="9" x2="21" y2="9"></line>
-                                </svg>
-                                Sorting
-                            </div>
-
-                            <label for="sortOrder">Sort Files By:</label>
-                            <select id="sortOrder">
-                                <option value="original">Original Order</option>
-                                <option value="name">Name (A-Z)</option>
-                                <option value="nameDesc">Name (Z-A)</option>
-                                <option value="size">Size (Smallest First)</option>
-                                <option value="sizeDesc">Size (Largest First)</option>
-                                <option value="type">File Type</option>
-                                <option value="date">Date Modified (Oldest First)</option>
-                                <option value="dateDesc">Date Modified (Newest First)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="right-panel">
-                <div class="preview-container">
-                    <div class="preview-header">
-                        <span>Preview</span>
-                        <span id="previewCount">0 files</span>
-                    </div>
-                    <div class="preview-content" id="previewArea">
-                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
-                            Files will appear here after selection
-                        </div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button id="processBtn" class="btn btn-primary btn-lg btn-full" disabled>
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Process & Download
-                    </button>
-                    <button id="resetBtn" class="btn btn-danger">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                            <path d="M3 3v5h5"></path>
-                        </svg>
-                        Reset
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
-
-    <script>
-        // Main application class
-        class ScalpelApp {
-            constructor() {
-                this.files = [];
-                this.initializeElements();
-                this.bindEvents();
-                this.setupOptionToggles();
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --primary-light: rgba(52, 152, 219, 0.2);
+            --secondary: #27ae60;
+            --secondary-dark: #219653;
+            --dark: #0a1929;
+            --darker: #07121e;
+            --dark-light: #132842;
+            --light: #ecf0f1;
+            --gray: #7f8c8d;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-light: 0 4px 12px rgba(52, 152, 219, 0.2);
+            --transition: all 0.3s ease;
+            --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
+            --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Crystal Navbar */
+        header {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: var(--crystal-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .try-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .try-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
+        
+        .secondary-button:hover {
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--dark-light);
+            position: relative;
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--light);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: var(--crystal-border);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(52, 152, 219, 0.4);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            border-radius: 50%;
+            padding: 15px;
+        }
+        
+        .feature-icon img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 0;
+            background: var(--dark);
+            position: relative;
+        }
+        
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            width: 250px;
+            box-shadow: var(--shadow);
+            position: relative;
+            border: var(--crystal-border);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            border-radius: 50%;
+            padding: 12px;
+        }
+        
+        .step-icon img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .step p {
+            color: var(--gray);
+        }
+        
+        /* Use Cases Section */
+        .use-cases {
+            padding: 80px 0;
+            background: var(--dark-light);
+            position: relative;
+        }
+        
+        .use-cases::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .use-case {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: var(--crystal-border);
+        }
+        
+        .use-case:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(52, 152, 219, 0.4);
+        }
+        
+        .use-case-icon {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            border-radius: 50%;
+            padding: 12px;
+        }
+        
+        .use-case-icon img {
+            width: 145%;
+            height: auto;
+        }
+        
+        .use-case-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .use-case-content p {
+            color: var(--gray);
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .cta::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--darker);
+            color: white;
+            padding: 50px 0 20px;
+            border-top: var(--crystal-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
             }
-
-            initializeElements() {
-                // UI Elements
-                this.dropZone = document.getElementById('dropZone');
-                this.fileInput = document.getElementById('fileInput');
-                this.browseBtn = document.getElementById('browseBtn');
-                this.optionsSection = document.getElementById('optionsSection');
-                this.previewArea = document.getElementById('previewArea');
-                this.processBtn = document.getElementById('processBtn');
-                this.resetBtn = document.getElementById('resetBtn');
-                this.fileCount = document.getElementById('fileCount');
-                this.previewCount = document.getElementById('previewCount');
-                this.toast = document.getElementById('toast');
-
-                // Option elements
-                this.baseNameInput = document.getElementById('baseName');
-                this.addNumberingCheckbox = document.getElementById('addNumbering');
-                this.startNumberInput = document.getElementById('startNumber');
-                this.numberDigitsInput = document.getElementById('numberDigits');
-                this.numberSeparatorInput = document.getElementById('numberSeparator');
-                this.changeExtensionCheckbox = document.getElementById('changeExtension');
-                this.newExtensionInput = document.getElementById('newExtension');
-                this.addPrefixCheckbox = document.getElementById('addPrefix');
-                this.prefixTextInput = document.getElementById('prefixText');
-                this.addSuffixCheckbox = document.getElementById('addSuffix');
-                this.suffixTextInput = document.getElementById('suffixText');
-                this.convertCaseCheckbox = document.getElementById('convertCase');
-                this.caseTypeSelect = document.getElementById('caseType');
-                this.findReplaceCheckbox = document.getElementById('findReplace');
-                this.findTextInput = document.getElementById('findText');
-                this.replaceTextInput = document.getElementById('replaceText');
-                this.matchCaseCheckbox = document.getElementById('matchCase');
-                this.sortOrderSelect = document.getElementById('sortOrder');
-
-                // Advanced options
-                this.toggleAdvancedBtn = document.getElementById('toggleAdvanced');
-                this.advancedOptions = document.getElementById('advancedOptions');
-                this.numberingOptions = document.getElementById('numberingOptions');
-                this.extensionOptions = document.getElementById('extensionOptions');
-                this.prefixOptions = document.getElementById('prefixOptions');
-                this.suffixOptions = document.getElementById('suffixOptions');
-                this.caseOptions = document.getElementById('caseOptions');
-                this.findReplaceOptions = document.getElementById('findReplaceOptions');
+            
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
-            bindEvents() {
-                // File selection
-                this.browseBtn.addEventListener('click', () => this.fileInput.click());
-                this.fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
-
-                // Drag and drop
-                this.dropZone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    this.dropZone.classList.add('dragover');
-                });
-
-                this.dropZone.addEventListener('dragleave', () => {
-                    this.dropZone.classList.remove('dragover');
-                });
-
-                this.dropZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    this.dropZone.classList.remove('dragover');
-                    this.handleFiles(e.dataTransfer.files);
-                });
-
-                // Options changes
-                this.baseNameInput.addEventListener('input', () => this.updatePreview());
-                this.addNumberingCheckbox.addEventListener('change', () => this.updatePreview());
-                this.startNumberInput.addEventListener('input', () => this.updatePreview());
-                this.numberDigitsInput.addEventListener('input', () => this.updatePreview());
-                this.numberSeparatorInput.addEventListener('input', () => this.updatePreview());
-                this.changeExtensionCheckbox.addEventListener('change', () => this.toggleExtensionOptions());
-                this.newExtensionInput.addEventListener('input', () => this.updatePreview());
-                this.addPrefixCheckbox.addEventListener('change', () => this.togglePrefixOptions());
-                this.prefixTextInput.addEventListener('input', () => this.updatePreview());
-                this.addSuffixCheckbox.addEventListener('change', () => this.toggleSuffixOptions());
-                this.suffixTextInput.addEventListener('input', () => this.updatePreview());
-                this.convertCaseCheckbox.addEventListener('change', () => this.toggleCaseOptions());
-                this.caseTypeSelect.addEventListener('change', () => this.updatePreview());
-                this.findReplaceCheckbox.addEventListener('change', () => this.toggleFindReplaceOptions());
-                this.findTextInput.addEventListener('input', () => this.updatePreview());
-                this.replaceTextInput.addEventListener('input', () => this.updatePreview());
-                this.matchCaseCheckbox.addEventListener('change', () => this.updatePreview());
-                this.sortOrderSelect.addEventListener('change', () => this.sortFiles());
-
-                // Action buttons
-                this.processBtn.addEventListener('click', () => this.processFiles());
-                this.resetBtn.addEventListener('click', () => this.resetApp());
+            
+            .hero h1 {
+                font-size: 2.5rem;
             }
-
-            setupOptionToggles() {
-                // Advanced options toggle
-                this.toggleAdvancedBtn.addEventListener('click', () => {
-                    const isHidden = this.advancedOptions.style.display === 'none';
-                    this.advancedOptions.style.display = isHidden ? 'block' : 'none';
-
-                    this.toggleAdvancedBtn.innerHTML = `
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="${isHidden ? '18 15 12 9 6 15' : '6 9 12 15 18 9'}"></polyline>
-                        </svg>
-                        ${isHidden ? 'Hide Advanced Options' : 'Advanced Options'}
-                    `;
-                });
-
-                // Option toggles
-                this.addNumberingCheckbox.addEventListener('change', () => {
-                    this.numberingOptions.style.display = this.addNumberingCheckbox.checked ? 'block' : 'none';
-                });
-
-                this.changeExtensionCheckbox.addEventListener('change', () => {
-                    this.extensionOptions.style.display = this.changeExtensionCheckbox.checked ? 'block' : 'none';
-                });
-
-                this.addPrefixCheckbox.addEventListener('change', () => {
-                    this.prefixOptions.style.display = this.addPrefixCheckbox.checked ? 'block' : 'none';
-                });
-
-                this.addSuffixCheckbox.addEventListener('change', () => {
-                    this.suffixOptions.style.display = this.addSuffixCheckbox.checked ? 'block' : 'none';
-                });
-
-                this.convertCaseCheckbox.addEventListener('change', () => {
-                    this.caseOptions.style.display = this.convertCaseCheckbox.checked ? 'block' : 'none';
-                });
-
-                this.findReplaceCheckbox.addEventListener('change', () => {
-                    this.findReplaceOptions.style.display = this.findReplaceCheckbox.checked ? 'block' : 'none';
-                });
-
-                // Initialize visibility states
-                this.numberingOptions.style.display = this.addNumberingCheckbox.checked ? 'block' : 'none';
-                this.extensionOptions.style.display = 'none';
-                this.prefixOptions.style.display = 'none';
-                this.suffixOptions.style.display = 'none';
-                this.caseOptions.style.display = 'none';
-                this.findReplaceOptions.style.display = 'none';
-                this.advancedOptions.style.display = 'none';
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
             }
-
-            toggleExtensionOptions() {
-                this.extensionOptions.style.display = this.changeExtensionCheckbox.checked ? 'block' : 'none';
-                this.updatePreview();
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
             }
-
-            togglePrefixOptions() {
-                this.prefixOptions.style.display = this.addPrefixCheckbox.checked ? 'block' : 'none';
-                this.updatePreview();
-            }
-
-            toggleSuffixOptions() {
-                this.suffixOptions.style.display = this.addSuffixCheckbox.checked ? 'block' : 'none';
-                this.updatePreview();
-            }
-
-            toggleCaseOptions() {
-                this.caseOptions.style.display = this.convertCaseCheckbox.checked ? 'block' : 'none';
-                this.updatePreview();
-            }
-
-            toggleFindReplaceOptions() {
-                this.findReplaceOptions.style.display = this.findReplaceCheckbox.checked ? 'block' : 'none';
-                this.updatePreview();
-            }
-
-            handleFiles(fileList) {
-                if (!fileList || fileList.length === 0) return;
-
-                // Convert FileList to Array and add to our files
-                const newFiles = Array.from(fileList);
-                this.files = [...this.files, ...newFiles];
-
-                // Show options section if we have files
-                if (this.files.length > 0) {
-                    this.optionsSection.style.display = 'block';
-                    this.dropZone.classList.add('file-added');
-                    setTimeout(() => {
-                        this.dropZone.classList.remove('file-added');
-                    }, 1000);
-                }
-
-                // Update file count
-                this.updateFileCount();
-
-                // Sort files based on current selection
-                this.sortFiles();
-
-                // Generate preview
-                this.updatePreview();
-
-                // Enable process button
-                this.processBtn.disabled = false;
-
-                // Show success message
-                this.showToast(`Added ${newFiles.length} file(s)`);
-            }
-
-            updateFileCount() {
-                const count = this.files.length;
-                this.fileCount.querySelector('span').textContent = `${count} file${count !== 1 ? 's' : ''} selected`;
-                this.previewCount.textContent = `${count} file${count !== 1 ? 's' : ''}`;
-            }
-
-            sortFiles() {
-                const sortBy = this.sortOrderSelect.value;
-
-                switch (sortBy) {
-                    case 'name':
-                        this.files.sort((a, b) => a.name.localeCompare(b.name));
-                        break;
-                    case 'nameDesc':
-                        this.files.sort((a, b) => b.name.localeCompare(a.name));
-                        break;
-                    case 'size':
-                        this.files.sort((a, b) => a.size - b.size);
-                        break;
-                    case 'sizeDesc':
-                        this.files.sort((a, b) => b.size - a.size);
-                        break;
-                    case 'type':
-                        this.files.sort((a, b) => {
-                            const extA = a.name.split('.').pop() || '';
-                            const extB = b.name.split('.').pop() || '';
-                            return extA.localeCompare(extB);
-                        });
-                        break;
-                    case 'date':
-                        this.files.sort((a, b) => a.lastModified - b.lastModified);
-                        break;
-                    case 'dateDesc':
-                        this.files.sort((a, b) => b.lastModified - a.lastModified);
-                        break;
-                    // 'original' keeps the current order
-                }
-
-                this.updatePreview();
-            }
-
-            generateNewFilename(originalName, index) {
-                let newName = '';
-                const baseName = this.baseNameInput.value || 'file';
-                const extension = originalName.split('.').pop();
-
-                // Add prefix if enabled
-                if (this.addPrefixCheckbox.checked && this.prefixTextInput.value) {
-                    newName += this.prefixTextInput.value;
-                }
-
-                // Add base name
-                newName += baseName;
-
-                // Add numbering if enabled
-                if (this.addNumberingCheckbox.checked) {
-                    const startNum = parseInt(this.startNumberInput.value) || 1;
-                    const numDigits = parseInt(this.numberDigitsInput.value) || 2;
-                    const separator = this.numberSeparatorInput.value || '_';
-                    const number = (startNum + index).toString().padStart(numDigits, '0');
-                    newName += separator + number;
-                }
-
-                // Add suffix if enabled
-                if (this.addSuffixCheckbox.checked && this.suffixTextInput.value) {
-                    newName += this.suffixTextInput.value;
-                }
-
-                // Apply find and replace if enabled
-                if (this.findReplaceCheckbox.checked && this.findTextInput.value) {
-                    const findText = this.findTextInput.value;
-                    const replaceText = this.replaceTextInput.value || '';
-                    const flags = this.matchCaseCheckbox.checked ? 'g' : 'gi';
-                    const regex = new RegExp(findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
-                    newName = newName.replace(regex, replaceText);
-                }
-
-                // Apply case conversion if enabled
-                if (this.convertCaseCheckbox.checked) {
-                    const caseType = this.caseTypeSelect.value;
-                    switch (caseType) {
-                        case 'lowercase':
-                            newName = newName.toLowerCase();
-                            break;
-                        case 'UPPERCASE':
-                            newName = newName.toUpperCase();
-                            break;
-                        case 'Title Case':
-                            newName = newName.replace(/\w\S*/g, (txt) => {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
-                            break;
-                        case 'Sentence case':
-                            newName = newName.charAt(0).toUpperCase() + newName.slice(1).toLowerCase();
-                            break;
-                    }
-                }
-
-                // Add extension
-                const newExtension = this.changeExtensionCheckbox.checked && this.newExtensionInput.value
-                    ? this.newExtensionInput.value
-                    : extension;
-
-                newName += '.' + newExtension;
-
-                return newName;
-            }
-
-            updatePreview() {
-                if (this.files.length === 0) {
-                    this.previewArea.innerHTML = `
-                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
-                            Files will appear here after selection
-                        </div>
-                    `;
-                    return;
-                }
-
-                let previewHTML = '';
-
-                this.files.forEach((file, index) => {
-                    const newName = this.generateNewFilename(file.name, index);
-
-                    previewHTML += `
-                        <div class="file-preview">
-                            <div class="original-name" title="${file.name}">${file.name}</div>
-                            <div class="new-name" title="${newName}">${newName}</div>
-                        </div>
-                    `;
-                });
-
-                this.previewArea.innerHTML = previewHTML;
-            }
-
-            async processFiles() {
-                if (this.files.length === 0) {
-                    this.showToast('No files to process', 'error');
-                    return;
-                }
-
-                try {
-                    this.processBtn.disabled = true;
-                    this.processBtn.innerHTML = `
-                        <svg class="icon spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 6v6l4 2"></path>
-                        </svg>
-                        Processing...
-                    `;
-
-                    this.processBtn.disabled = true;
-                    this.processBtn.textContent = "Processing...";
-
-                    // after zip is ready
-                    this.processBtn.disabled = false;
-                    this.processBtn.textContent = "Process & Download";
-
-                    // real ZIP generation
-                    const zip = new JSZip();
-
-                    for (let i = 0; i < this.files.length; i++) {
-                        const file = this.files[i];
-                        const newName = this.generateNewFilename(file.name, i);
-
-                        // keep the original file bytes, just rename inside zip
-                        const data = await file.arrayBuffer();
-                        zip.file(newName, data);
-                    }
-
-                    const blob = await zip.generateAsync({ type: "blob" });
-                    const a = document.createElement("a");
-                    a.href = URL.createObjectURL(blob);
-
-                    // optional: include base name in the zip filename
-                    const base = (this.baseNameInput.value || "renamed").replace(/\s+/g, "_");
-                    a.download = `${base}_${Date.now()}.zip`;
-
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    URL.revokeObjectURL(a.href);
-
-                    this.showToast("The download has started!", "success");
-
-
-                } catch (error) {
-                    console.error('Error processing files:', error);
-                    this.showToast('Error processing files', 'error');
-                    this.processBtn.innerHTML = `
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Process & Download
-                    `;
-                    this.processBtn.disabled = false;
-                }
-            }
-
-            resetApp() {
-                this.files = [];
-                this.fileInput.value = '';
-                this.optionsSection.style.display = 'none';
-                this.previewArea.innerHTML = `
-                    <div style="color: #7f8c8d; text-align: center; padding: 20px;">
-                        Files will appear here after selection
-                    </div>
-                `;
-                this.processBtn.disabled = true;
-                this.updateFileCount();
-
-                // Reset form fields
-                this.baseNameInput.value = '';
-                this.addNumberingCheckbox.checked = true;
-                this.startNumberInput.value = 1;
-                this.numberDigitsInput.value = 2;
-                this.numberSeparatorInput.value = '_';
-                this.changeExtensionCheckbox.checked = false;
-                this.newExtensionInput.value = '';
-                this.addPrefixCheckbox.checked = false;
-                this.prefixTextInput.value = '';
-                this.addSuffixCheckbox.checked = false;
-                this.suffixTextInput.value = '';
-                this.convertCaseCheckbox.checked = false;
-                this.caseTypeSelect.value = 'lowercase';
-                this.findReplaceCheckbox.checked = false;
-                this.findTextInput.value = '';
-                this.replaceTextInput.value = '';
-                this.matchCaseCheckbox.checked = false;
-                this.sortOrderSelect.value = 'original';
-
-                // Hide advanced options
-                this.advancedOptions.style.display = 'none';
-                this.toggleAdvancedBtn.innerHTML = `
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    Advanced Options
-                `;
-
-                this.showToast('Application reset');
-            }
-
-            showToast(message, type = 'info') {
-                this.toast.textContent = message;
-                this.toast.className = `toast ${type}`;
-                this.toast.classList.add('show');
-
-                setTimeout(() => {
-                    this.toast.classList.remove('show');
-                }, 3000);
+            
+            .feature-card, .step, .use-case {
+                width: 100%;
             }
         }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Scalpel Logo">
+                    <div class="logo-text"></div>
+                </div>
+                <div class="nav-links">
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#use-cases">Use Cases</a>
+                    <a href="https://guns.lol/lionshaft">About the Creator</a>
+                    <a href="feedback.html">Feedback</a>
+                    <a href="pricing.html">Pricing</a>
+                </div>
+                <a href="index.html" class="try-button">Try for Free</a>
+            </div>
+        </div>
+    </header>
 
-        // Initialize the application when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            new ScalpelApp();
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Rename Files in Bulk with Precision</h1>
+            <p>Scalpel is the ultimate tool for renaming multiple files at once. Save time and organize your files with our powerful yet easy-to-use bulk file renamer.</p>
+            <div class="hero-buttons">
+                <a href="scalpel.html" class="primary-button">Try Scalpel for Free</a>
+                <a href="learn-more.html" class="secondary-button">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Scalpel offers everything you need to rename files in bulk efficiently</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/icon-bulk.png" alt="Bulk Renaming Icon">
+                    </div>
+                    <h3>Bulk Renaming</h3>
+                    <p>Rename hundreds of files simultaneously with just a few clicks</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/icon-numbering.webp" alt="Numbering System Icon">
+                    </div>
+                    <h3>Numbering System</h3>
+                    <p>Add automatic numbering with custom formats (01, 02, 03 or 1, 2, 3)</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/icon-custom.png" alt="Custom Naming Icon">
+                    </div>
+                    <h3>Custom Naming</h3>
+                    <p>Create custom naming patterns with prefixes and suffixes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/icon-findreplace.png" alt="Find & Replace Icon">
+                    </div>
+                    <h3>Find & Replace</h3>
+                    <p>Find and replace text in filenames with advanced options</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/icon-case.png" alt="Case Conversion Icon">
+                    </div>
+                    <h3>Case Conversion</h3>
+                    <p>Change text case to uppercase, lowercase, title case, or sentence case</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="images/icon-zip.png" alt="ZIP Download Icon">
+                    </div>
+                    <h3>ZIP Download</h3>
+                    <p>Download all renamed files in a convenient ZIP folder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Renaming files in bulk has never been easier</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <img src="images/icon-upload.png" alt="Upload Icon">
+                    </div>
+                    <h3>Upload Files</h3>
+                    <p>Drag and drop or select files from your computer</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <img src="images/icon-customize.png" alt="Customize Icon">
+                    </div>
+                    <h3>Customize</h3>
+                    <p>Set your naming pattern and preferences</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <img src="images/icon-preview.png" alt="Preview Icon">
+                    </div>
+                    <h3>Preview</h3>
+                    <p>See exactly how your files will be renamed</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <img src="images/icon-download.png" alt="Download Icon">
+                    </div>
+                    <h3>Download</h3>
+                    <p>Get your renamed files in a ZIP folder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases" id="use-cases">
+        <div class="container">
+            <div class="section-title">
+                <h2>Who Can Use Scalpel?</h2>
+                <p>Scalpel is perfect for anyone who works with multiple files</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <img src="images/icon-photographer.png" alt="Photographer Icon">
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Photographers</h3>
+                        <p>Rename hundreds of photos with consistent naming conventions</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <img src="images/icon-creator.png" alt="Content Creator Icon">
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Content Creators</h3>
+                        <p>Organize media files for projects and social media</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <img src="images/icon-developer.png" alt="Developer Icon">
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Developers</h3>
+                        <p>Batch rename project files and assets</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <img src="images/icon-research.png" alt="Researcher Icon">
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Researchers & Students</h3>
+                        <p>Organize data files and research materials consistently</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <img src="images/icon-professional.png" alt="Professional Icon">
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Professionals</h3>
+                        <p>Manage documents and reports efficiently</p>
+                    </div>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <img src="images/icon-everyone.png" alt="Everyone Icon">
+                    </div>
+                    <div class="use-case-content">
+                        <h3>Everyone Else</h3>
+                        <p>Anyone who needs to organize files on their computer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Organize Your Files?</h2>
+            <p>Join thousands of users who save time with Scalpel's powerful bulk renaming features</p>
+            <a href="scalpel.html" class="cta-button">Try Scalpel for Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Scalpel</h3>
+                    <p>The ultimate bulk file renaming tool for professionals and enthusiasts.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="https://guns.lol/lionshaft">About the Creator</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Scalpel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
-    <footer>Made with &#129505; by Lionshaft.</footer>
 </body>
-
 </html>
