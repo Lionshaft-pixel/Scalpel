@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="UTF-8">
-        <!-- Google AdSense -->
+      <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3857250497763440" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Scalpel - Advanced Bulk File Renamer | Free Online File Renamer Tool</title>
@@ -34,6 +34,129 @@
         }
         </script>
     <style>
+        /* Sidebar and improved burger styles */
+        .burger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(52, 152, 219, 0.35); /* blue-translucent, less opacity */
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 2001;
+        }
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2.2px;
+            margin: 4px 0;
+            background: var(--primary); /* blue bars */
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 240px;
+            background: var(--crystal-bg);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        .sidebar .close-btn {
+            align-self: flex-end;
+            font-size: 2rem;
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        .sidebar .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .sidebar .sidebar-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            transition: color 0.2s;
+        }
+        .sidebar .sidebar-links a:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 900px) {
+            .burger {
+                display: flex;
+            }
+            .nav-links {
+                display: none !important;
+            }
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none !important;
+            }
+        }
+        /* Burger menu styles */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background: var(--crystal-bg);
+                flex-direction: column;
+                gap: 0;
+                width: 200px;
+                box-shadow: var(--shadow);
+                border-radius: 0 0 10px 10px;
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .burger {
+                display: flex;
+            }
+        }
         :root {
             --primary: #3498db;
             --primary-dark: #2980b9;
@@ -654,7 +777,12 @@
                     <img src="images/logo.png" alt="Scalpel Logo">
                     <div class="logo-text"></div>
                 </div>
-                <div class="nav-links">
+                <div class="burger" id="burgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-links" id="navLinks">
                     <a href="#how-it-works">How It Works</a>
                     <a href="#use-cases">Use Cases</a>
                     <a href="https://guns.lol/lionshaft">About the Creator</a>
@@ -662,9 +790,71 @@
                     <a href="pricing.html">Pricing</a>
                 </div>
                 <a href="index.html" class="try-button">Try for Free</a>
+                <!-- Sidebar for mobile -->
+                <nav class="sidebar" id="sidebarMenu">
+                    <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
+                    <div class="sidebar-links">
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="#use-cases">Use Cases</a>
+                        <a href="https://guns.lol/lionshaft">About the Creator</a>
+                        <a href="feedback.html">Feedback</a>
+                        <a href="pricing.html">Pricing</a>
+                    </div>
+                </nav>
             </div>
         </div>
     </header>
+    <script>
+    // Improved burger menu with left sidebar
+    document.addEventListener('DOMContentLoaded', function() {
+        const burger = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebarMenu');
+        const closeBtn = document.getElementById('closeSidebar');
+        function openSidebar() {
+            sidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        burger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openSidebar();
+        });
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeSidebar();
+        });
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 900 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== burger) {
+                closeSidebar();
+            }
+        });
+        // Hide nav-links on mobile
+        function handleResize() {
+            const navLinks = document.getElementById('navLinks');
+            if (window.innerWidth <= 900) {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = '';
+            }
+        }
+        window.addEventListener('resize', handleResize);
+        handleResize();
+    });
+    </script>
+    <script>
+    // Burger menu toggle for mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        const burger = document.getElementById('burgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    });
+    </script>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -883,6 +1073,16 @@
             </div>
         </div>
     </footer>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3857250497763440" crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3857250497763440"
+         data-ad-slot="4281722175"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
     <script>
         // Smooth scrolling for navigation links

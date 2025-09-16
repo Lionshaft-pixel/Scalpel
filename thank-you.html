@@ -9,7 +9,7 @@
     <title>Thank You - Scalpel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
+    :root {
             --primary: #3498db;
             --primary-dark: #2980b9;
             --primary-light: rgba(52, 152, 219, 0.2);
@@ -47,6 +47,37 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 8px;
+            }
+            .thank-you-container {
+                padding: 30px 5px;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .thank-you-icon {
+                font-size: 3rem;
+            }
+            .ad-container {
+                padding: 10px;
+                margin: 20px 0;
+            }
+            .download-section {
+                padding: 15px;
+            }
+            .download-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            .footer-nav {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
 
         /* Navbar */
@@ -438,7 +469,6 @@
          (adsbygoogle = window.adsbygoogle || []).push({});
      </script>
     </div>
-    -->
 </body>
 
 </html>
