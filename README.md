@@ -33,19 +33,3 @@ A powerful, browser-based bulk file renaming tool with advanced customization op
 6. Click **Process & Download** to get your ZIP file  
 
 ---
-
-##  Installation
-
-No installation required! Simply download the HTML file and open it in your browser.  
-
-For developers who want to extend the functionality:
-
-```bash
-# Clone this repo :
-git clone https://github.com/Lionshaft-pixel/scalpel.git
-
-# Then Navigate to this directory :
-cd scalpel
-
-# That's it! Open index.html :
-open index.html
