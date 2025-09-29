@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
         <meta charset="UTF-8">
-      <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3857250497763440" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Scalpel - Advanced Bulk File Renamer | Free Online File Renamer Tool</title>
@@ -10,19 +9,16 @@
         <meta name="keywords" content="bulk file renamer, file rename, online file renamer, batch rename, rename files, free file renamer, Scalpel">
         <meta name="robots" content="index, follow">
         <link rel="canonical" href="https://yourdomain.com/">
-        <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://yourdomain.com/">
         <meta property="og:title" content="Scalpel - Advanced Bulk File Renamer">
         <meta property="og:description" content="Rename, organize, and manage your files online for free with Scalpel.">
         <meta property="og:image" content="https://yourdomain.com/images/Scalpel_logo.png">
-        <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:url" content="https://yourdomain.com/">
         <meta name="twitter:title" content="Scalpel - Advanced Bulk File Renamer">
         <meta name="twitter:description" content="Rename, organize, and manage your files online for free with Scalpel.">
         <meta name="twitter:image" content="https://yourdomain.com/images/Scalpel_logo.png">
-        <!-- Structured Data -->
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -33,36 +29,48 @@
             "image": "https://yourdomain.com/images/Scalpel_logo.png"
         }
         </script>
-
-        <script data-goatcounter="https://lionshaft.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
     <style>
-        /* Sidebar and improved burger styles */
+        /* Mobile logo and button adjustments */
+        @media (max-width: 900px) {
+            .logo img {
+                display: none !important;
+            }
+            .logo-text {
+                display: block !important;
+                font-size: 2rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .try-button {
+                display: none !important;
+            }
+        }
         .burger {
             position: fixed;
             top: 20px;
             left: 20px;
             display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             width: 48px;
             height: 48px;
-            background: rgba(52, 152, 219, 0.35); /* blue-translucent, less opacity */
-            border-radius: 50%;
-            box-shadow: var(--shadow);
+            background: transparent;
+            border-radius: 12px;
+            box-shadow: none;
             cursor: pointer;
             z-index: 2001;
+            justify-content: center;
+            align-items: center;
+            border: none;
         }
-        .burger span {
+        .burger img {
+            width: 32px;
+            height: 32px;
             display: block;
-            width: 22px;
-            height: 2.2px;
-            margin: 4px 0;
-            background: var(--primary); /* blue bars */
-            border-radius: 2px;
-            transition: 0.3s;
+            border-radius: 10px;
         }
+        .burger span { display: none; }
         .sidebar {
             position: fixed;
             top: 0;
@@ -192,15 +200,26 @@
             color: var(--light);
             background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 900px) {
+            html, body {
+                overflow-x: hidden !important;
+            }
+            .container {
+                padding: 0 6px;
+                max-width: 100vw;
+            }
         }
         
-        /* Crystal Navbar */
         header {
             background: var(--crystal-bg);
             backdrop-filter: blur(10px);
@@ -290,7 +309,6 @@
             box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
         }
         
-        /* Hero Section */
         .hero {
             padding: 100px 0 80px;
             text-align: center;
@@ -471,7 +489,6 @@
             color: var(--gray);
         }
         
-        /* How It Works Section */
         .how-it-works {
             padding: 80px 0;
             background: var(--dark);
@@ -692,7 +709,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
         
-        /* Footer */
         footer {
             background: var(--darker);
             color: white;
@@ -738,11 +754,10 @@
             color: rgba(255, 255, 255, 0.7);
         }
         
-        /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 20px;
+                gap: 10px;
             }
             
             .nav-links {
@@ -772,27 +787,23 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="images/logo.png" alt="Scalpel Logo">
-                    <div class="logo-text"></div>
+                    <div class="logo-text">Scalpel</div>
                 </div>
                 <div class="burger" id="burgerMenu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <img src="images/burger.png" alt="Menu">
                 </div>
                 <div class="nav-links" id="navLinks">
                     <a href="learn-more.html">How It Works</a>
                     <a href="#use-cases">Use Cases</a>
                     <a href="https://guns.lol/lionshaft">About the Creator</a>
                     <a href="feedback.html">Feedback</a>
+                    <a href="pricing.html">Pricing</a>
                 </div>
-                <a href="index.html" class="try-button">Try for Free</a>
-                <!-- Sidebar for mobile -->
+                <a href="scalpel.html" class="try-button">Try for Free</a>
                 <nav class="sidebar" id="sidebarMenu">
                     <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
                     <div class="sidebar-links">
@@ -800,6 +811,7 @@
                         <a href="#use-cases">Use Cases</a>
                         <a href="https://guns.lol/lionshaft">About the Creator</a>
                         <a href="feedback.html">Feedback</a>
+                        <a href="pricing.html">Pricing</a>
                     </div>
                 </nav>
             </div>
@@ -832,7 +844,7 @@
                 closeSidebar();
             }
         });
-        // Hide nav-links on mobile
+
         function handleResize() {
             const navLinks = document.getElementById('navLinks');
             if (window.innerWidth <= 900) {
@@ -846,7 +858,6 @@
     });
     </script>
     <script>
-    // Burger menu toggle for mobile
     document.addEventListener('DOMContentLoaded', function() {
         const burger = document.getElementById('burgerMenu');
         const navLinks = document.getElementById('navLinks');
@@ -856,7 +867,6 @@
     });
     </script>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>Rename Files in Bulk with Precision</h1>
@@ -868,7 +878,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
             <div class="section-title">
@@ -922,7 +931,6 @@
         </div>
     </section>
 
-    <!-- How It Works Section -->
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-title">
@@ -935,8 +943,8 @@
                     <div class="step-icon">
                         <img src="images/icon-upload.png" alt="Upload Icon">
                     </div>
-                    <h3>Upload Files</h3>
-                    <p>Drag and drop or select files from your computer</p>
+                    <h3>Select Files</h3>
+                    <p>Drag and drop or choose files from your computer</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
@@ -966,7 +974,6 @@
         </div>
     </section>
 
-    <!-- Use Cases Section -->
     <section class="use-cases" id="use-cases">
         <div class="container">
             <div class="section-title">
@@ -1032,7 +1039,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta">
         <div class="container">
             <h2>Ready to Organize Your Files?</h2>
@@ -1041,7 +1047,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -1063,7 +1068,7 @@
                 <div class="footer-column">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
                     </ul>
                 </div>
@@ -1073,19 +1078,8 @@
             </div>
         </div>
     </footer>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3857250497763440" crossorigin="anonymous"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-3857250497763440"
-         data-ad-slot="4281722175"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
 
     <script>
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1103,8 +1097,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
-
