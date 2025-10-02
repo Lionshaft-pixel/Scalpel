@@ -24,6 +24,10 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json({ limit: '2mb' })); // small JSON for options
+
+// SERVE STATIC FILES (HTML, CSS, JS) - ADDED THIS LINE!
+app.use(express.static(path.join(__dirname, '..')));
+
 // capture raw body for webhook verification
 app.use(express.urlencoded({ extended: true }));
 app.use(express.raw({ type: 'application/json', limit: '1mb', verify: (req, res, buf) => { req.rawBody = buf; } }));
@@ -304,5 +308,3 @@ app.get('/', (req, res) => {
 
 /* ---------- Start ---------- */
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
-
-
