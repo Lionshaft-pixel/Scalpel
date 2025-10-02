@@ -1,0 +1,22 @@
+-- users table
+create table if not exists users (
+  id uuid primary key default gen_random_uuid(),
+  email text unique not null,
+  password_hash text,
+  is_pro boolean default false,
+  file_limit integer default 50,
+  files_used integer default 0,
+  created_at timestamptz default now()
+);
+
+-- Create an RPC for atomic increment (used by server)
+create or replace function increment_files_used(p_user_id uuid, p_inc integer) returns void as $$
+begin
+  update users set files_used = users.files_used + p_inc
+  where id = p_user_id and (is_pro = true or users.files_used + p_inc <= file_limit);
+
+  if not found then
+    raise exception 'limit_exceeded';
+  end if;
+end;
+$$ language plpgsql security definer;

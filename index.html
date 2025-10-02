@@ -30,7 +30,7 @@
         }
         </script>
     <style>
-        /* Mobile logo and button adjustments */
+        
         @media (max-width: 900px) {
             .logo img {
                 display: none !important;
@@ -128,7 +128,7 @@
                 display: none !important;
             }
         }
-        /* Burger menu styles */
+        
         .burger {
             display: none;
             flex-direction: column;
@@ -405,7 +405,7 @@
             transform: translateY(-2px);
         }
         
-        /* Features Section */
+        
         .features {
             padding: 80px 0;
             background: var(--dark-light);
@@ -511,6 +511,11 @@
             flex-wrap: wrap;
             gap: 30px;
             margin-top: 50px;
+            transition: 0.3s;
+        }
+
+        .step:hover {
+            transform: scale(1.03);
         }
         
         .step {
@@ -639,7 +644,7 @@
             color: var(--gray);
         }
         
-        /* CTA Section */
+        
         .cta {
             padding: 100px 0;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -784,6 +789,26 @@
                 width: 100%;
             }
         }
+        
+        
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #101828;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #101828;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+        ::-webkit-scrollbar-corner {
+            background: #101828;
+        }
     </style>
 </head>
 <body>
@@ -800,18 +825,18 @@
                     <a href="learn-more.html">How It Works</a>
                     <a href="#use-cases">Use Cases</a>
                     <a href="https://guns.lol/lionshaft">About the Creator</a>
-                    <a href="feedback.html">Feedback</a>
                     <a href="pricing.html">Pricing</a>
+                    <a href="feedback.html">Feedback</a>
                 </div>
                 <a href="scalpel.html" class="try-button">Try for Free</a>
                 <nav class="sidebar" id="sidebarMenu">
                     <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
                     <div class="sidebar-links">
-                        <a href="#how-it-works">How It Works</a>
+                        <a href="learn-more.html">How It Works</a>
                         <a href="#use-cases">Use Cases</a>
                         <a href="https://guns.lol/lionshaft">About the Creator</a>
-                        <a href="feedback.html">Feedback</a>
                         <a href="pricing.html">Pricing</a>
+                        <a href="feedback.html">Feedback</a>
                     </div>
                 </nav>
             </div>
@@ -838,7 +863,7 @@
             e.stopPropagation();
             closeSidebar();
         });
-        // Close sidebar when clicking outside
+        
         document.addEventListener('click', function(e) {
             if (window.innerWidth <= 900 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== burger) {
                 closeSidebar();
@@ -1069,7 +1094,7 @@
                     <h3>Legal</h3>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="terms-and-conditions.html">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>

@@ -39,15 +39,29 @@
       color: var(--light);
       background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
       min-height: 100vh;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+      width: 100%;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    /* Crystal Navbar */
+    /* Mobile-specific container adjustments */
+    @media (max-width: 900px) {
+      html, body {
+        overflow-x: hidden !important;
+      }
+      .container {
+        padding: 0 6px;
+        max-width: 100vw;
+      }
+    }
+    
     header {
       background: var(--crystal-bg);
       backdrop-filter: blur(10px);
@@ -132,7 +146,158 @@
       box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
     }
 
-    /* Page Header */
+    /* Burger Menu Styles */
+    @media (max-width: 900px) {
+      .logo img {
+        display: none !important;
+      }
+      .logo-text {
+        display: block !important;
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .try-button {
+        display: none !important;
+      }
+    }
+    
+    .burger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: none;
+      width: 48px;
+      height: 48px;
+      background: transparent;
+      border-radius: 12px;
+      box-shadow: none;
+      cursor: pointer;
+      z-index: 2001;
+      justify-content: center;
+      align-items: center;
+      border: none;
+    }
+    
+    .burger img {
+      width: 32px;
+      height: 32px;
+      display: block;
+      border-radius: 10px;
+    }
+    
+    .burger span { display: none; }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 240px;
+      background: var(--crystal-bg);
+      box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 20px 20px 20px;
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    
+    .sidebar.active {
+      transform: translateX(0);
+    }
+    
+    .sidebar .close-btn {
+      align-self: flex-end;
+      font-size: 2rem;
+      color: var(--danger);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+    
+    .sidebar .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    
+    .sidebar .sidebar-links a {
+      color: var(--light);
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 500;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s;
+    }
+    
+    .sidebar .sidebar-links a:hover {
+      color: var(--primary);
+    }
+    
+    @media (max-width: 900px) {
+      .burger {
+        display: flex;
+      }
+      .nav-links {
+        display: none !important;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none !important;
+      }
+    }
+    
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 200;
+    }
+    
+    .burger span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      margin: 4px 0;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    
+    @media (max-width: 900px) {
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: var(--crystal-bg);
+        flex-direction: column;
+        gap: 0;
+        width: 200px;
+        box-shadow: var(--shadow);
+        border-radius: 0 0 10px 10px;
+        display: none;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .burger {
+        display: flex;
+      }
+    }
+    
     .page-header {
       text-align: center;
       padding: 80px 0 40px;
@@ -181,7 +346,7 @@
       z-index: 2;
     }
 
-    /* Steps Section */
+    
     .steps-section {
       padding: 60px 0;
       position: relative;
@@ -259,7 +424,7 @@
       line-height: 1.7;
     }
 
-    /* CTA Section */
+    
     .cta-section {
       padding: 80px 0;
       background: var(--dark-light);
@@ -314,7 +479,7 @@
       box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
     }
 
-    /* Footer */
+    
     footer {
       background: var(--darker);
       color: white;
@@ -354,7 +519,31 @@
       width: 100%;
     }
 
-    /* Responsive Design */
+    
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: #3498db #101828;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: #101828;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+      border-radius: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2980b9;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #101828;
+    }
+
+    
     @media (max-width: 768px) {
       .header-content {
         flex-direction: column;
@@ -427,14 +616,25 @@
         <div class="logo">
           <div class="logo-text">Scalpel</div>
         </div>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="learn-more.html">How It Works</a>
-          <a href="https://guns.lol/lionshaft">About the Creator</a>
-          <a href="feedback.html">Feedback</a>
-          <a href="pricing.html">Pricing</a>
+        <div class="burger" id="burgerMenu">
+          <img src="images/burger.png" alt="Menu">
         </div>
-        <a href="home.html" class="try-button">Try for Free</a>
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="feedback.html">Feedback</a>
+          <a href="https://guns.lol/lionshaft">About the Creator</a>
+        </div>
+        <a href="scalpel.html" class="try-button">Try for Free</a>
+        <nav class="sidebar" id="sidebarMenu">
+          <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
+          <div class="sidebar-links">
+            <a href="index.html">Home</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="https://guns.lol/lionshaft">About the Creator</a>
+          </div>
+        </nav>
       </div>
     </div>
   </header>
@@ -515,9 +715,8 @@
       <div class="footer-content">
         <p>&copy; 2025 Scalpel. All Rights Reserved.</p>
         <div class="footer-nav">
-          <a href="home.html">Home</a>
           <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
+          <a href="terms-and-conditions.html">Terms of Service</a>
         </div>
       </div>
       <div class="copyright">
@@ -525,6 +724,28 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Burger menu functionality
+    const burgerMenu = document.getElementById('burgerMenu');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    const closeSidebar = document.getElementById('closeSidebar');
+    
+    burgerMenu.addEventListener('click', () => {
+      sidebarMenu.classList.add('active');
+    });
+    
+    closeSidebar.addEventListener('click', () => {
+      sidebarMenu.classList.remove('active');
+    });
+    
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!sidebarMenu.contains(e.target) && !burgerMenu.contains(e.target)) {
+        sidebarMenu.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 
 </html>

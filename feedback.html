@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +12,22 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourdomain.com/feedback.html">
     <meta property="og:title" content="Feedback - Scalpel | Advanced Bulk File Renamer">
-    <meta property="og:description" content="Share your feedback about Scalpel, the best free online bulk file renamer tool.">
+    <meta property="og:description"
+        content="Share your feedback about Scalpel, the best free online bulk file renamer tool.">
     <meta property="og:image" content="https://yourdomain.com/images/Scalpel_logo.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://yourdomain.com/feedback.html">
     <meta name="twitter:title" content="Feedback - Scalpel | Advanced Bulk File Renamer">
-    <meta name="twitter:description" content="Share your feedback about Scalpel, the best free online bulk file renamer tool.">
+    <meta name="twitter:description"
+        content="Share your feedback about Scalpel, the best free online bulk file renamer tool.">
     <meta name="twitter:image" content="https://yourdomain.com/images/Scalpel_logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Mobile logo and button adjustments */
         @media (max-width: 900px) {
             .logo img {
                 display: none !important;
             }
+
             .logo-text {
                 display: block !important;
                 font-size: 2rem;
@@ -34,10 +37,12 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
+
             .try-button {
                 display: none !important;
             }
         }
+
         .burger {
             position: fixed;
             top: 20px;
@@ -54,13 +59,18 @@
             align-items: center;
             border: none;
         }
+
         .burger img {
             width: 32px;
             height: 32px;
             display: block;
             border-radius: 10px;
         }
-        .burger span { display: none; }
+
+        .burger span {
+            display: none;
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -68,7 +78,7 @@
             height: 100vh;
             width: 240px;
             background: var(--crystal-bg);
-            box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.2);
             z-index: 2000;
             display: flex;
             flex-direction: column;
@@ -76,9 +86,11 @@
             transform: translateX(-100%);
             transition: transform 0.3s;
         }
+
         .sidebar.active {
             transform: translateX(0);
         }
+
         .sidebar .close-btn {
             align-self: flex-end;
             font-size: 2rem;
@@ -88,37 +100,43 @@
             cursor: pointer;
             margin-bottom: 30px;
         }
+
         .sidebar .sidebar-links {
             display: flex;
             flex-direction: column;
             gap: 18px;
         }
+
         .sidebar .sidebar-links a {
             color: var(--light);
             text-decoration: none;
             font-size: 1.15rem;
             font-weight: 500;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             transition: color 0.2s;
         }
+
         .sidebar .sidebar-links a:hover {
             color: var(--primary);
         }
+
         @media (max-width: 900px) {
             .burger {
                 display: flex;
             }
+
             .nav-links {
                 display: none !important;
             }
         }
+
         @media (max-width: 900px) {
             .nav-links {
                 display: none !important;
             }
         }
-        /* Burger menu styles */
+
         .burger {
             display: none;
             flex-direction: column;
@@ -129,6 +147,7 @@
             cursor: pointer;
             z-index: 200;
         }
+
         .burger span {
             display: block;
             width: 28px;
@@ -138,6 +157,7 @@
             border-radius: 2px;
             transition: 0.3s;
         }
+
         @media (max-width: 900px) {
             .nav-links {
                 position: absolute;
@@ -151,13 +171,16 @@
                 border-radius: 0 0 10px 10px;
                 display: none;
             }
+
             .nav-links.active {
                 display: flex;
             }
+
             .burger {
                 display: flex;
             }
         }
+
         :root {
             --primary: #3498db;
             --primary-dark: #2980b9;
@@ -177,13 +200,13 @@
             --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
             --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -192,7 +215,7 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -200,16 +223,20 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         @media (max-width: 900px) {
-            html, body {
+
+            html,
+            body {
                 overflow-x: hidden !important;
             }
+
             .container {
                 padding: 0 6px;
                 max-width: 100vw;
             }
         }
-        
+
         header {
             background: var(--crystal-bg);
             backdrop-filter: blur(10px);
@@ -219,25 +246,25 @@
             z-index: 100;
             border-bottom: var(--crystal-border);
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
+
         .logo img {
             height: 40px;
             width: auto;
         }
-        
+
         .logo-text {
             font-size: 24px;
             font-weight: 700;
@@ -246,12 +273,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 30px;
         }
-        
+
         .nav-links a {
             text-decoration: none;
             color: var(--light);
@@ -260,7 +287,7 @@
             position: relative;
             padding: 5px 0;
         }
-        
+
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -271,15 +298,15 @@
             background: var(--primary);
             transition: var(--transition);
         }
-        
+
         .nav-links a:hover {
             color: var(--primary);
         }
-        
+
         .nav-links a:hover::after {
             width: 100%;
         }
-        
+
         .try-button {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -293,19 +320,19 @@
             display: inline-block;
             box-shadow: var(--shadow-light);
         }
-        
+
         .try-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
         }
-        
+
         .hero {
             padding: 100px 0 80px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero::before {
             content: '';
             position: absolute;
@@ -317,7 +344,7 @@
             background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
             opacity: 0.5;
         }
-        
+
         .hero::after {
             content: '';
             position: absolute;
@@ -329,7 +356,7 @@
             background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
             opacity: 0.5;
         }
-        
+
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
@@ -337,7 +364,7 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .hero p {
             font-size: 1.2rem;
             color: var(--gray);
@@ -346,7 +373,7 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .hero-buttons {
             display: flex;
             gap: 20px;
@@ -355,7 +382,7 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .primary-button {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -370,12 +397,12 @@
             font-size: 1.1rem;
             box-shadow: var(--shadow-light);
         }
-        
+
         .primary-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
         }
-        
+
         .secondary-button {
             background: transparent;
             color: var(--primary);
@@ -389,19 +416,19 @@
             display: inline-block;
             font-size: 1.1rem;
         }
-        
+
         .secondary-button:hover {
             background: rgba(52, 152, 219, 0.1);
             transform: translateY(-2px);
         }
-        
-        /* Features Section */
+
+
         .features {
             padding: 80px 0;
             background: var(--dark-light);
             position: relative;
         }
-        
+
         .features::before {
             content: '';
             position: absolute;
@@ -411,30 +438,30 @@
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
         }
-        
+
         .section-title {
             text-align: center;
             margin-bottom: 60px;
         }
-        
+
         .section-title h2 {
             font-size: 2.5rem;
             color: var(--light);
             margin-bottom: 15px;
         }
-        
+
         .section-title p {
             color: var(--gray);
             max-width: 600px;
             margin: 0 auto;
         }
-        
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
-        
+
         .feature-card {
             background: var(--crystal-bg);
             backdrop-filter: blur(10px);
@@ -445,13 +472,13 @@
             box-shadow: var(--shadow);
             border: var(--crystal-border);
         }
-        
+
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             border-color: rgba(52, 152, 219, 0.4);
         }
-        
+
         .feature-icon {
             width: 70px;
             height: 70px;
@@ -463,28 +490,28 @@
             border-radius: 50%;
             padding: 15px;
         }
-        
+
         .feature-icon img {
             width: 100%;
             height: auto;
         }
-        
+
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: var(--light);
         }
-        
+
         .feature-card p {
             color: var(--gray);
         }
-        
+
         .how-it-works {
             padding: 80px 0;
             background: var(--dark);
             position: relative;
         }
-        
+
         .how-it-works::before {
             content: '';
             position: absolute;
@@ -494,7 +521,7 @@
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
         }
-        
+
         .steps {
             display: flex;
             justify-content: center;
@@ -502,7 +529,7 @@
             gap: 30px;
             margin-top: 50px;
         }
-        
+
         .step {
             background: var(--crystal-bg);
             backdrop-filter: blur(10px);
@@ -514,7 +541,7 @@
             position: relative;
             border: var(--crystal-border);
         }
-        
+
         .step-number {
             position: absolute;
             top: -15px;
@@ -531,7 +558,7 @@
             font-size: 1.2rem;
             box-shadow: var(--shadow-light);
         }
-        
+
         .step-icon {
             width: 60px;
             height: 60px;
@@ -543,29 +570,29 @@
             border-radius: 50%;
             padding: 12px;
         }
-        
+
         .step-icon img {
             width: 100%;
             height: auto;
         }
-        
+
         .step h3 {
             font-size: 1.3rem;
             margin-bottom: 15px;
             color: var(--light);
         }
-        
+
         .step p {
             color: var(--gray);
         }
-        
+
         /* Use Cases Section */
         .use-cases {
             padding: 80px 0;
             background: var(--dark-light);
             position: relative;
         }
-        
+
         .use-cases::before {
             content: '';
             position: absolute;
@@ -575,14 +602,14 @@
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
         }
-        
+
         .use-cases-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 50px;
         }
-        
+
         .use-case {
             background: var(--crystal-bg);
             backdrop-filter: blur(10px);
@@ -595,13 +622,13 @@
             transition: var(--transition);
             border: var(--crystal-border);
         }
-        
+
         .use-case:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             border-color: rgba(52, 152, 219, 0.4);
         }
-        
+
         .use-case-icon {
             width: 50px;
             height: 50px;
@@ -613,23 +640,23 @@
             border-radius: 50%;
             padding: 12px;
         }
-        
+
         .use-case-icon img {
             width: 145%;
             height: auto;
         }
-        
+
         .use-case-content h3 {
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: var(--light);
         }
-        
+
         .use-case-content p {
             color: var(--gray);
         }
-        
-        /* CTA Section */
+
+
         .cta {
             padding: 100px 0;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -638,7 +665,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .cta::before {
             content: '';
             position: absolute;
@@ -649,7 +676,7 @@
             border-radius: 50%;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
         }
-        
+
         .cta::after {
             content: '';
             position: absolute;
@@ -660,14 +687,14 @@
             border-radius: 50%;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
         }
-        
+
         .cta h2 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             position: relative;
             z-index: 2;
         }
-        
+
         .cta p {
             font-size: 1.2rem;
             max-width: 600px;
@@ -676,7 +703,7 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .cta-button {
             background: white;
             color: var(--primary);
@@ -693,95 +720,97 @@
             z-index: 2;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         footer {
             background: var(--darker);
             color: white;
             padding: 50px 0 20px;
             border-top: var(--crystal-border);
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
         }
-        
+
         .footer-column h3 {
             font-size: 1.3rem;
             margin-bottom: 20px;
             color: var(--light);
         }
-        
+
         .footer-column ul {
             list-style: none;
         }
-        
+
         .footer-column ul li {
             margin-bottom: 10px;
         }
-        
+
         .footer-column a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             transition: var(--transition);
         }
-        
+
         .footer-column a:hover {
             color: var(--primary);
         }
-        
+
         .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
         }
-        
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             .nav-links {
                 gap: 15px;
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
+
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .steps {
                 flex-direction: column;
                 align-items: center;
             }
-            
-            .feature-card, .step, .use-case {
+
+            .feature-card,
+            .step,
+            .use-case {
                 width: 100%;
             }
         }
-        
-        /* Feedback Form Styles */
+
+
         .feedback-form-container {
             padding: 80px 0;
             background: var(--dark);
             position: relative;
         }
-        
+
         .feedback-form-container::before {
             content: '';
             position: absolute;
@@ -791,7 +820,7 @@
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
         }
-        
+
         .feedback-card {
             background: var(--crystal-bg);
             backdrop-filter: blur(10px);
@@ -803,18 +832,18 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
         .feedback-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             border-color: rgba(52, 152, 219, 0.4);
         }
-        
+
         .form-group {
             margin-bottom: 25px;
             position: relative;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 8px;
@@ -822,7 +851,7 @@
             color: var(--light);
             transition: var(--transition);
         }
-        
+
         .form-control {
             width: 100%;
             padding: 15px;
@@ -833,28 +862,28 @@
             font-size: 16px;
             transition: var(--transition);
         }
-        
+
         .form-control:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
-        
+
         textarea.form-control {
             min-height: 150px;
             resize: vertical;
         }
-        
+
         .rating-group {
             display: flex;
             gap: 10px;
             margin: 15px 0;
         }
-        
+
         .rating-input {
             display: none;
         }
-        
+
         .rating-label {
             cursor: pointer;
             width: 45px;
@@ -869,32 +898,32 @@
             transition: var(--transition);
             border: 2px solid rgba(52, 152, 219, 0.2);
         }
-        
-        .rating-input:checked + .rating-label {
+
+        .rating-input:checked+.rating-label {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
         }
-        
+
         .rating-label:hover {
             background: var(--primary-dark);
             color: white;
             border-color: var(--primary-dark);
         }
-        
+
         .checkbox-group {
             display: flex;
             align-items: center;
             gap: 10px;
             margin: 15px 0;
         }
-        
+
         .checkbox-input {
             width: 20px;
             height: 20px;
             accent-color: var(--primary);
         }
-        
+
         .submit-btn {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -911,23 +940,23 @@
             letter-spacing: 1px;
             box-shadow: var(--shadow-light);
         }
-        
+
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
         }
-        
+
         .submit-btn:active {
             transform: translateY(0);
         }
-        
+
         .character-count {
             text-align: right;
             font-size: 0.9rem;
             color: var(--gray);
             margin-top: 5px;
         }
-        
+
         .success-message {
             display: none;
             background: var(--secondary);
@@ -938,13 +967,45 @@
             margin-top: 20px;
             animation: fadeIn 0.5s ease;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #101828;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #101828;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: #101828;
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -958,19 +1019,17 @@
                 <div class="nav-links" id="navLinks">
                     <a href="index.html">Home</a>
                     <a href="learn-more.html">How It Works</a>
-                    <a href="https://guns.lol/lionshaft">About the Creator</a>
-                    <a href="feedback.html">Feedback</a>
                     <a href="pricing.html">Pricing</a>
+                    <a href="https://guns.lol/lionshaft">About the Creator</a>
                 </div>
                 <a href="scalpel.html" class="try-button">Try for Free</a>
                 <nav class="sidebar" id="sidebarMenu">
                     <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
                     <div class="sidebar-links">
+                        <a href="index.html">Home</a>
                         <a href="learn-more.html">How It Works</a>
-                        <a href="#use-cases">Use Cases</a>
-                        <a href="https://guns.lol/lionshaft">About the Creator</a>
-                        <a href="feedback.html">Feedback</a>
                         <a href="pricing.html">Pricing</a>
+                        <a href="https://guns.lol/lionshaft">About the Creator</a>
                     </div>
                 </nav>
             </div>
@@ -990,12 +1049,14 @@
                 <form id="feedbackForm" action="https://formspree.io/f/xqadlqwe" method="POST">
                     <div class="form-group">
                         <label for="name" class="form-label">Your Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name"
+                            required>
                     </div>
 
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email"
+                            required>
                     </div>
 
                     <div class="form-group">
@@ -1003,16 +1064,16 @@
                         <div class="rating-group">
                             <input type="radio" id="rating1" name="rating" value="1" class="rating-input">
                             <label for="rating1" class="rating-label">1</label>
-                            
+
                             <input type="radio" id="rating2" name="rating" value="2" class="rating-input">
                             <label for="rating2" class="rating-label">2</label>
-                            
+
                             <input type="radio" id="rating3" name="rating" value="3" class="rating-input">
                             <label for="rating3" class="rating-label">3</label>
-                            
+
                             <input type="radio" id="rating4" name="rating" value="4" class="rating-input">
                             <label for="rating4" class="rating-label">4</label>
-                            
+
                             <input type="radio" id="rating5" name="rating" value="5" class="rating-input">
                             <label for="rating5" class="rating-label">5</label>
                         </div>
@@ -1020,19 +1081,23 @@
 
                     <div class="form-group">
                         <label for="subject" class="form-label">Subject</label>
-                        <input type="text" id="subject" name="subject" class="form-control" placeholder="What is your feedback about?">
+                        <input type="text" id="subject" name="subject" class="form-control"
+                            placeholder="What is your feedback about?">
                     </div>
 
                     <div class="form-group">
                         <label for="message" class="form-label">Your Feedback</label>
-                        <textarea id="message" name="message" class="form-control" placeholder="Please share your thoughts in detail..."></textarea>
+                        <textarea id="message" name="message" class="form-control"
+                            placeholder="Please share your thoughts in detail..."></textarea>
                         <div class="character-count"><span id="charCount">0</span>/500 characters</div>
                     </div>
 
                     <div class="form-group">
                         <div class="checkbox-group">
-                            <input type="checkbox" id="contactPermission" name="contactPermission" class="checkbox-input">
-                            <label for="contactPermission" class="form-label">I agree to be contacted for follow-up on my feedback</label>
+                            <input type="checkbox" id="contactPermission" name="contactPermission"
+                                class="checkbox-input">
+                            <label for="contactPermission" class="form-label">I agree to be contacted for follow-up on
+                                my feedback</label>
                         </div>
                     </div>
 
@@ -1083,33 +1148,33 @@
     </footer>
 
     <script>
-        // Character count for feedback textarea
+
         const messageTextarea = document.getElementById('message');
         const charCount = document.getElementById('charCount');
-        
+
         messageTextarea.addEventListener('input', () => {
             const length = messageTextarea.value.length;
             charCount.textContent = length;
-            
+
             if (length > 500) {
                 charCount.style.color = 'var(--danger)';
             } else {
                 charCount.style.color = 'var(--gray)';
             }
         });
-        
-        // Form submission handling
+
+
         const feedbackForm = document.getElementById('feedbackForm');
         const successMessage = document.getElementById('successMessage');
-        
+
         feedbackForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             // Here you would typically send the form data to your server
             // For now, we'll just show the success message
             feedbackForm.style.display = 'none';
             successMessage.style.display = 'block';
-            
+
             // Reset form after 5 seconds (for demo purposes)
             setTimeout(() => {
                 feedbackForm.reset();
@@ -1119,20 +1184,20 @@
                 charCount.style.color = 'var(--gray)';
             }, 5000);
         });
-        
-        // Mobile menu functionality
+
+
         const burgerMenu = document.getElementById('burgerMenu');
         const sidebarMenu = document.getElementById('sidebarMenu');
         const closeSidebar = document.getElementById('closeSidebar');
-        
+
         burgerMenu.addEventListener('click', () => {
             sidebarMenu.classList.add('active');
         });
-        
+
         closeSidebar.addEventListener('click', () => {
             sidebarMenu.classList.remove('active');
         });
-        
+
         // Close sidebar when clicking outside
         document.addEventListener('click', (e) => {
             if (!sidebarMenu.contains(e.target) && !burgerMenu.contains(e.target)) {
@@ -1141,4 +1206,5 @@
         });
     </script>
 </body>
+
 </html>
