@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config({ path: path.resolve(__dirname, 'server', '.env') });
+require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
 
@@ -304,3 +304,4 @@ app.get('/', (req, res) => {
 
 /* ---------- Start ---------- */
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+
