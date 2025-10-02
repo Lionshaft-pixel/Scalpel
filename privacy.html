@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Scalpel | Advanced Bulk File Renamer</title>
+    <meta name="description" content="Privacy Policy for Scalpel - Learn how we handle your data and privacy while using our bulk file renaming tool.">
+    <meta name="keywords" content="privacy policy, data protection, bulk file renamer, Scalpel">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://glitchyn.online/privacy-policy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://glitchyn.online/privacy-policy.html">
+    <meta property="og:title" content="Privacy Policy - Scalpel | Advanced Bulk File Renamer">
+    <meta property="og:description" content="Privacy Policy for Scalpel - Learn how we handle your data and privacy while using our bulk file renaming tool.">
+    <meta property="og:image" content="https://glitchyn.online/images/Scalpel_logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://glitchyn.online/privacy-policy.html">
+    <meta name="twitter:title" content="Privacy Policy - Scalpel | Advanced Bulk File Renamer">
+    <meta name="twitter:description" content="Privacy Policy for Scalpel - Learn how we handle your data and privacy while using our bulk file renaming tool.">
+    <meta name="twitter:image" content="https://glitchyn.online/images/Scalpel_logo.png">
+    <style>
+        
+        @media (max-width: 900px) {
+            .logo img {
+                display: none !important;
+            }
+            .logo-text {
+                display: block !important;
+                font-size: 2rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .try-button {
+                display: none !important;
+            }
+        }
+        .burger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: none;
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border-radius: 12px;
+            box-shadow: none;
+            cursor: pointer;
+            z-index: 2001;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+        .burger img {
+            width: 32px;
+            height: 32px;
+            display: block;
+            border-radius: 10px;
+        }
+        .burger span { display: none; }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 240px;
+            background: var(--crystal-bg);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        .sidebar .close-btn {
+            align-self: flex-end;
+            font-size: 2rem;
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        .sidebar .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .sidebar .sidebar-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            transition: color 0.2s;
+        }
+        .sidebar .sidebar-links a:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 900px) {
+            .burger {
+                display: flex;
+            }
+            .nav-links {
+                display: none !important;
+            }
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none !important;
+            }
+        }
+        
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background: var(--crystal-bg);
+                flex-direction: column;
+                gap: 0;
+                width: 200px;
+                box-shadow: var(--shadow);
+                border-radius: 0 0 10px 10px;
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .burger {
+                display: flex;
+            }
+        }
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --primary-light: rgba(52, 152, 219, 0.2);
+            --secondary: #27ae60;
+            --secondary-dark: #219653;
+            --dark: #0a1929;
+            --darker: #07121e;
+            --dark-light: #132842;
+            --light: #ecf0f1;
+            --gray: #7f8c8d;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-light: 0 4px 12px rgba(52, 152, 219, 0.2);
+            --transition: all 0.3s ease;
+            --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
+            --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 900px) {
+            html, body {
+                overflow-x: hidden !important;
+            }
+            .container {
+                padding: 0 6px;
+                max-width: 100vw;
+            }
+        }
+        
+        header {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: var(--crystal-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .try-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .try-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content-section {
+            padding: 80px 0;
+            background: var(--dark);
+            position: relative;
+        }
+        
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+        }
+        
+        .content-card {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: var(--crystal-border);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(52, 152, 219, 0.4);
+        }
+        
+        .content-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            text-align: center;
+        }
+        
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: var(--light);
+            border-bottom: 1px solid rgba(52, 152, 219, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .content-card h4 {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            color: var(--light);
+        }
+        
+        .content-card p {
+            margin-bottom: 15px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        .content-card ul, .content-card ol {
+            margin: 15px 0 15px 30px;
+            color: var(--gray);
+        }
+        
+        .content-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .content-card strong {
+            color: var(--light);
+        }
+        
+        .last-updated {
+            text-align: center;
+            color: var(--gray);
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background: var(--darker);
+            color: white;
+            padding: 50px 0 20px;
+            border-top: var(--crystal-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 25px;
+            }
+            
+            .content-card h2 {
+                font-size: 2rem;
+            }
+            
+            .content-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #101828;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #101828;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+        ::-webkit-scrollbar-corner {
+            background: #101828;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-text">Scalpel</div>
+                </div>
+                <div class="burger" id="burgerMenu">
+                    <img src="images/burger.png" alt="Menu">
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html">Home</a>
+                    <a href="learn-more.html">How It Works</a>
+                    <a href="pricing.html">Pricing</a>
+                    <a href="feedback.html">Feedback</a>
+                    <a href="https://guns.lol/lionshaft">About the Creator</a>
+                </div>
+                <a href="index.html" class="try-button">Try for Free</a>
+                <nav class="sidebar" id="sidebarMenu">
+                    <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
+                    <div class="sidebar-links">
+                        <a href="index.html">Home</a>
+                        <a href="learn-more.html">How It Works</a>
+                        <a href="feedback.html">Feedback</a>
+                        <a href="pricing.html">Pricing</a>
+                        <a href="https://guns.lol/lionshaft">About the Creator</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy is important to us. Learn how Scalpel handles your data and protects your privacy.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <div class="last-updated">Last Updated: September 29, 2025</div>
+                
+                <h2>Privacy Policy for Scalpel</h2>
+                
+                <p>This Privacy Policy describes how Scalpel ("we," "our," or "us") collects, uses, and shares information when you use our bulk file renaming tool available at <strong>https://glitchyn.online</strong>.</p>
+                
+                <h3>1. Information We Collect</h3>
+                
+                <h4>1.1 No Personal Data Collection</h4>
+                <p>Scalpel is designed with privacy in mind. Our core file renaming functionality:</p>
+                <ul>
+                    <li><strong>Does NOT collect any personal information</strong></li>
+                    <li><strong>Does NOT use cookies</strong></li>
+                    <li><strong>Does NOT track your activities</strong></li>
+                    <li><strong>Processes all files locally in your browser</strong></li>
+                </ul>
+                
+                <h4>1.2 Feedback Form Data</h4>
+                <p>When you voluntarily submit feedback through our form, we collect:</p>
+                <ul>
+                    <li>Your name</li>
+                    <li>Email address</li>
+                    <li>Rating (1-5)</li>
+                    <li>Your feedback message</li>
+                </ul>
+                <p>This data is processed through <strong>Formspree</strong> and is used solely to improve our service.</p>
+                
+                <h4>1.3 Analytics</h4>
+                <p>We collect only basic analytics data:</p>
+                <ul>
+                    <li>Page visit counts (to understand usage patterns)</li>
+                </ul>
+                <p>No personal identifiers or detailed tracking information is collected.</p>
+                
+                <h3>2. File Processing</h3>
+                <p>Scalpel operates entirely client-side:</p>
+                <ul>
+                    <li><strong>No file storage:</strong> Your files are never sent to our servers</li>
+                    <li><strong>Local processing:</strong> All file renaming happens in your browser using JavaScript</li>
+                    <li><strong>Immediate download:</strong> Renamed files are downloaded directly to your device</li>
+                    <li><strong>No server access:</strong> We cannot access, view, or store your files</li>
+                </ul>
+                
+                <h3>3. Third-Party Services</h3>
+                <p>We use the following third-party services:</p>
+                <ul>
+                    <li><strong>Formspree:</strong> For processing feedback form submissions</li>
+                    <li><strong>GitHub Pages:</strong> For hosting our website</li>
+                </ul>
+                <p>These services have their own privacy policies, and we encourage you to review them.</p>
+                
+                <h3>4. Data Sharing and Disclosure</h3>
+                <p>We do not:</p>
+                <ul>
+                    <li>Sell, trade, or rent your personal information</li>
+                    <li>Share your data with advertisers</li>
+                    <li>Use your data for marketing purposes</li>
+                </ul>
+                <p>The only data shared is feedback form submissions with Formspree, as necessary to process your feedback.</p>
+                
+                <h3>5. Data Security</h3>
+                <p>Since we don't store your personal data or files, there's minimal security risk. However, we maintain:</p>
+                <ul>
+                    <li>Secure HTTPS connections</li>
+                    <li>Regular security updates</li>
+                    <li>Minimal data collection practices</li>
+                </ul>
+                
+                <h3>6. Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access any personal data we might have (feedback submissions)</li>
+                    <li>Request deletion of your feedback data</li>
+                    <li>Opt-out of future communications</li>
+                </ul>
+                <p>To exercise these rights, contact us through our feedback form.</p>
+                
+                <h3>7. Children's Privacy</h3>
+                <p>Scalpel is suitable for all ages and contains no age-restricted content. We do not knowingly collect personal information from children under 13.</p>
+                
+                <h3>8. Changes to This Policy</h3>
+                <p>We may update this Privacy Policy periodically. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+                
+                <h3>9. Contact Us</h3>
+                <p>If you have any questions about this Privacy Policy, please contact us through our <a href="feedback.html">feedback form</a>.</p>
+                
+                <h3>10. Consent</h3>
+                <p>By using our website, you consent to our Privacy Policy.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Scalpel</h3>
+                    <p>The ultimate bulk file renaming tool for professionals and enthusiasts.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="learn-more.html">How It Works</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="https://guns.lol/lionshaft">About the Creator</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms-and-conditions.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Scalpel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const closeSidebar = document.getElementById('closeSidebar');
+        
+        burgerMenu.addEventListener('click', () => {
+            sidebarMenu.classList.add('active');
+        });
+        
+        closeSidebar.addEventListener('click', () => {
+            sidebarMenu.classList.remove('active');
+        });
+        
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebarMenu.contains(e.target) && !burgerMenu.contains(e.target)) {
+                sidebarMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

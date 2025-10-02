@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scalpel - How It Works</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3498db;
+      --primary-dark: #2980b9;
+      --primary-light: rgba(52, 152, 219, 0.2);
+      --secondary: #27ae60;
+      --secondary-dark: #219653;
+      --dark: #0a1929;
+      --darker: #07121e;
+      --dark-light: #132842;
+      --light: #ecf0f1;
+      --gray: #7f8c8d;
+      --danger: #e74c3c;
+      --warning: #f39c12;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      --shadow-light: 0 4px 12px rgba(52, 152, 219, 0.2);
+      --transition: all 0.3s ease;
+      --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
+      --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--light);
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+      min-height: 100vh;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Mobile-specific container adjustments */
+    @media (max-width: 900px) {
+      html, body {
+        overflow-x: hidden !important;
+      }
+      .container {
+        padding: 0 6px;
+        max-width: 100vw;
+      }
+    }
+    
+    header {
+      background: var(--crystal-bg);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: var(--crystal-border);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--light);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .try-button {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: var(--shadow-light);
+    }
+
+    .try-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+    }
+
+    /* Burger Menu Styles */
+    @media (max-width: 900px) {
+      .logo img {
+        display: none !important;
+      }
+      .logo-text {
+        display: block !important;
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .try-button {
+        display: none !important;
+      }
+    }
+    
+    .burger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: none;
+      width: 48px;
+      height: 48px;
+      background: transparent;
+      border-radius: 12px;
+      box-shadow: none;
+      cursor: pointer;
+      z-index: 2001;
+      justify-content: center;
+      align-items: center;
+      border: none;
+    }
+    
+    .burger img {
+      width: 32px;
+      height: 32px;
+      display: block;
+      border-radius: 10px;
+    }
+    
+    .burger span { display: none; }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 240px;
+      background: var(--crystal-bg);
+      box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 20px 20px 20px;
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    
+    .sidebar.active {
+      transform: translateX(0);
+    }
+    
+    .sidebar .close-btn {
+      align-self: flex-end;
+      font-size: 2rem;
+      color: var(--danger);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+    
+    .sidebar .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    
+    .sidebar .sidebar-links a {
+      color: var(--light);
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 500;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s;
+    }
+    
+    .sidebar .sidebar-links a:hover {
+      color: var(--primary);
+    }
+    
+    @media (max-width: 900px) {
+      .burger {
+        display: flex;
+      }
+      .nav-links {
+        display: none !important;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none !important;
+      }
+    }
+    
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 200;
+    }
+    
+    .burger span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      margin: 4px 0;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    
+    @media (max-width: 900px) {
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: var(--crystal-bg);
+        flex-direction: column;
+        gap: 0;
+        width: 200px;
+        box-shadow: var(--shadow);
+        border-radius: 0 0 10px 10px;
+        display: none;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .burger {
+        display: flex;
+      }
+    }
+    
+    .page-header {
+      text-align: center;
+      padding: 80px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+      opacity: 0.5;
+    }
+
+    .page-header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+      opacity: 0.5;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--light);
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    
+    .steps-section {
+      padding: 60px 0;
+      position: relative;
+    }
+
+    .steps-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+    }
+
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .step-card {
+      background: var(--crystal-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      gap: 25px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: var(--crystal-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(52, 152, 219, 0.4);
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-light);
+    }
+
+    .step-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-content h2 i {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .step-content p {
+      color: var(--gray);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    
+    .cta-section {
+      padding: 80px 0;
+      background: var(--dark-light);
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+    }
+
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: var(--light);
+    }
+
+    .cta-content p {
+      color: var(--gray);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.1rem;
+      box-shadow: var(--shadow-light);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+    }
+
+    
+    footer {
+      background: var(--darker);
+      color: white;
+      padding: 40px 0 20px;
+      border-top: var(--crystal-border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-nav a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-nav a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      width: 100%;
+    }
+
+    
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: #3498db #101828;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: #101828;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+      border-radius: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2980b9;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #101828;
+    }
+
+    
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .step-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+      }
+
+      .step-number {
+        margin: 0 auto;
+      }
+
+      .step-content h2 {
+        justify-content: center;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-nav {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .page-header {
+        padding: 60px 0 30px;
+      }
+
+      .step-content h2 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .footer-nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-text">Scalpel</div>
+        </div>
+        <div class="burger" id="burgerMenu">
+          <img src="images/burger.png" alt="Menu">
+        </div>
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="feedback.html">Feedback</a>
+          <a href="https://guns.lol/lionshaft">About the Creator</a>
+        </div>
+        <a href="scalpel.html" class="try-button">Try for Free</a>
+        <nav class="sidebar" id="sidebarMenu">
+          <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
+          <div class="sidebar-links">
+            <a href="index.html">Home</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="https://guns.lol/lionshaft">About the Creator</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>How Scalpel Works</h1>
+        <p>Learn how to easily rename your files with our simple, secure, and efficient process</p>
+      </div>
+    </section>
+
+    <section class="steps-section">
+      <div class="container">
+        <div class="steps-container">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h2><i class="fas fa-upload"></i> Select Your Files</h2>
+              <p>Choose the files you want to rename. Scalpel supports multiple files at once to save you time. Simply
+                drag and drop or use our intuitive file selector.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h2><i class="fas fa-sliders-h"></i> Customize Naming Rules</h2>
+              <p>Choose how you want your files renamed. You can add prefixes, suffixes, numbering, or completely new
+                names. Our interface makes it easy to preview changes before processing.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h2><i class="fas fa-cogs"></i> Process & Download</h2>
+              <p>Click the "Process Files" button. Your files will be renamed and prepared for download. After
+                processing, you'll see a "Thank You" page with a download link.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h2><i class="fas fa-lock"></i> Safety & Privacy</h2>
+              <p>Scalpel does not store your files. Everything is processed in your browser or temporarily on the server
+                for processing only, then deleted immediately. Your privacy is our priority.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h2>Monetization</h2>
+              <p>To keep this service free, ads are displayed on the download page. Watching the ad allows us to
+                maintain the tool without charging users. We strive to keep ads unobtrusive.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Organize Your Files?</h2>
+          <p>Try Scalpel today and experience the easiest way to rename multiple files at once with complete privacy and
+            security.</p>
+          <a href="scalpel.html" class="cta-button">Get Started Now</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 Scalpel. All Rights Reserved.</p>
+        <div class="footer-nav">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms-and-conditions.html">Terms of Service</a>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>Your privacy is protected. We never store your files on our servers.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Burger menu functionality
+    const burgerMenu = document.getElementById('burgerMenu');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    const closeSidebar = document.getElementById('closeSidebar');
+    
+    burgerMenu.addEventListener('click', () => {
+      sidebarMenu.classList.add('active');
+    });
+    
+    closeSidebar.addEventListener('click', () => {
+      sidebarMenu.classList.remove('active');
+    });
+    
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!sidebarMenu.contains(e.target) && !burgerMenu.contains(e.target)) {
+        sidebarMenu.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+
+</html>

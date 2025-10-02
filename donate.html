@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Our Cause - Donate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AV-_k6GsYBG35pJATPXYtYUEM5aqexeCzTvj0bRAcTJ6fRZ5CcPM3GYWaQdDQbbTdlAhuiSLGEW0EB1B&currency=USD"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #4e54c8, #8a64d6);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .donation-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .option-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .option-icon {
+            font-size: 28px;
+            margin-right: 15px;
+            color: #4e54c8;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f0f3ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-title {
+            font-size: 1.6rem;
+            color: #4e54c8;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .qr-code img {
+            max-width: 220px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .upi-id {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .upi-note {
+            font-size: 20px;
+        }
+
+        .crypto-address {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-family: monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .paypal-container {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .paypal-button {
+            display: inline-block;
+            background: #0070ba;
+            color: white;
+            padding: 16px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 112, 186, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .paypal-button:hover {
+            background: #005ea6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 112, 186, 0.4);
+        }
+
+        .note {
+            font-style: italic;
+            color: #666;
+            margin-top: 25px;
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #666;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .crypto-section {
+            margin: 20px 0;
+        }
+
+        .crypto-selector {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .crypto-dropdown {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #4e54c8;
+            border-radius: 8px;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e54c8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+
+        .address-container {
+            display: none;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .address-box {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #333;
+            font-family: monospace;
+            word-break: break-all;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4e54c8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .copy-btn:hover {
+            background: #3a3fb8;
+        }
+
+        .crypto-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .network-info {
+            color: #888;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .crypto-note {
+            font-style: italic;
+            color: #666;
+            margin-top: 15px;
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background: #222;
+            /* background color */
+            padding: 0.75rem 1.5rem;
+            border-bottom: 2px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin-top: -30px;
+            margin-left: -20px;
+            width: 1351px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            /* space between logo + buttons */
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        .nav-link {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #4cafef;
+            /* highlight blue on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Logo" class="nav-logo">
+            </a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="https://guns.lol/lionshaft" class="nav-link">About the Creator</a>
+            <a href="feedback.html" class="nav-link">Feedback</a>
+        </div>
+    </nav>
+    <div class="container"><br>
+        <header>
+            <h1>Support Our Mission</h1>
+            <p class="subtitle">Your generous donation helps us continue our important work. Every contribution, no
+                matter the size, makes a significant difference and is greatly appreciated.</p>
+        </header>
+
+        <div class="donation-options">
+            <!-- UPI Donation Option -->
+            <div class="option-card">
+                <div class="option-header">
+                    <div class="option-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h2 class="option-title">UPI Payment (India)</h2>
+                </div>
+                <p class="upi-note">Scan the QR code below using any UPI app to make a quick donation <strong> (For
+                        Indian users only)</strong>:
+                </p>
+
+                <div class="qr-code">
+                    <img src="images/qr-code.jpg" alt="UPI QR Code">
+                </div>
+
+                <p>Or send directly to our UPI ID:</p>
+                <div class="upi-id">9125569967@fam</div>
+
+                <p>UPI (Unified Payments Interface) is an Indian instant payment system. This option is for people with
+                    Indian bank accounts only. If you're an Indian user, please use UPI or cryptocurrency options.
+                </p>
+            </div>
+
+            <!-- PayPal Donation Option -->
+            <div class="option-card">
+                <div class="option-header">
+                    <div class="option-icon">
+                        <i class="fab fa-paypal"></i>
+                    </div>
+                    <h2 class="option-title">PayPal (Recommended)</h2>
+                </div>
+                <p>Donate Using Paypal :D</p><br><br><br><br><br><br>
+                <div id="paypal-button-container"></div>
+                <script>
+                    paypal.Buttons({
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: '10' // Set your donation amount here
+                                    }
+                                }]
+                            });
+                        },
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (details) {
+                                alert('Transaction completed by ' + details.payer.name.given_name);
+                                // You can add redirect or thank you message here
+                            });
+                        }
+                    }).render('#paypal-button-container');
+                </script>
+
+                <p>You will be redirected to PayPal's secure payment system to complete your donation.</p>
+            </div>
+
+            <!-- Crypto Donation Option -->
+            <div class="option-card">
+                <div class="option-header">
+                    <div class="option-icon">
+                        <i class="fab fa-bitcoin"></i>
+                    </div>
+                    <h2 class="option-title">Cryptocurrency</h2>
+                </div>
+
+                <div class="crypto-section">
+                    <p>Select a cryptocurrency to donate:</p>
+
+                    <div class="crypto-selector">
+                        <select class="crypto-dropdown" id="cryptoDropdown">
+                            <option value="" disabled selected>Select a cryptocurrency</option>
+                            <option value="bitcoin">Bitcoin (BTC)</option>
+                            <option value="ethereum">Ethereum (ETH)</option>
+                            <option value="usdt">USDT (ERC-20)</option>
+                            <option value="usdc">USDC (ERC-20)</option>
+                            <option value="dogecoin">Dogecoin (DOGE)</option>
+                        </select>
+                    </div>
+
+                    <div class="address-container" id="bitcoin">
+                        <div class="address-box">
+                            <div class="crypto-name">Bitcoin (BTC) - Bitcoin Network</div>
+                            <div class="address">13tu8EhHRf3kD39E6dSp5K4Eho3dDJ3yGA</div>
+                            <div class="network-info">Make sure to send only BTC to this address</div>
+                            <button class="copy-btn"
+                                onclick="copyAddress('13tu8EhHRf3kD39E6dSp5K4Eho3dDJ3yGA')">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="address-container" id="ethereum">
+                        <div class="address-box">
+                            <div class="crypto-name">Ethereum (ETH) - Ethereum Network (ERC20)</div>
+                            <div class="address">0x00d4d0fa9c9b15713f50e8e08bc0eb73a73fc1d2</div>
+                            <div class="network-info">Make sure to send only ETH to this address</div>
+                            <button class="copy-btn"
+                                onclick="copyAddress('0x00d4d0fa9c9b15713f50e8e08bc0eb73a73fc1d2')">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="address-container" id="usdt">
+                        <div class="address-box">
+                            <div class="crypto-name">USDT - Ethereum Network (ERC20)</div>
+                            <div class="address">0x00d4d0fa9c9b15713f50e8e08bc0eb73a73fc1d2</div>
+                            <div class="network-info">Make sure to send only USDT (ERC20) to this address</div>
+                            <button class="copy-btn"
+                                onclick="copyAddress('0x00d4d0fa9c9b15713f50e8e08bc0eb73a73fc1d2')">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="address-container" id="usdc">
+                        <div class="address-box">
+                            <div class="crypto-name">USDC - Ethereum Network (ERC20)</div>
+                            <div class="address">0x00d4d0fa9c9b15713f50e8e08bc0eb73a73fc1d2</div>
+                            <div class="network-info">Make sure to send only USDC (ERC20) to this address</div>
+                            <button class="copy-btn"
+                                onclick="copyAddress('0x00d4d0fa9c9b15713f50e8e08bc0eb73a73fc1d2')">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="address-container" id="dogecoin">
+                        <div class="address-box">
+                            <div class="crypto-name">Dogecoin (DOGE) - Dogecoin Network</div>
+                            <div class="address">DKKAze3EVCn1mo3ByFtoNfeeuf97BfYeDk</div>
+                            <div class="network-info">Make sure to send only DOGE to this address</div>
+                            <button class="copy-btn"
+                                onclick="copyAddress('DKKAze3EVCn1mo3ByFtoNfeeuf97BfYeDk')">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Simple animation for page elements
+                document.addEventListener('DOMContentLoaded', function () {
+                    const options = {
+                        root: null,
+                        rootMargin: '0px',
+                        threshold: 0.1
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.opacity = 1;
+                                entry.target.style.transform = 'translateY(0)';
+                            }
+                        });
+                    }, options);
+
+                    // Observe donation cards
+                    const cards = document.querySelectorAll('.option-card');
+                    cards.forEach(card => {
+                        card.style.opacity = 0;
+                        card.style.transform = 'translateY(20px)';
+                        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        observer.observe(card);
+                    });
+                });
+
+                // Crypto Stuff...
+
+                document.getElementById('cryptoDropdown').addEventListener('change', function () {
+                    // Hide all address containers
+                    document.querySelectorAll('.address-container').forEach(function (container) {
+                        container.classList.remove('active');
+                    });
+
+                    // Show selected address container
+                    const selectedValue = this.value;
+                    if (selectedValue) {
+                        document.getElementById(selectedValue).classList.add('active');
+                    }
+                });
+
+                function copyAddress(address) {
+                    navigator.clipboard.writeText(address).then(function () {
+                        alert('Address copied to clipboard: ' + address);
+                    }, function () {
+                        alert('Failed to copy address');
+                    });
+                }
+            </script>
+</body>
+
+</html>

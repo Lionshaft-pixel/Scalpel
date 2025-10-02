@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Scalpel | Advanced Bulk File Renamer</title>
+    <meta name="description" content="Terms of Service for Scalpel - Learn about the rules and guidelines for using our bulk file renaming tool.">
+    <meta name="keywords" content="terms of service, terms and conditions, bulk file renamer, Scalpel">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://glitchyn.online/terms-of-service.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://glitchyn.online/terms-of-service.html">
+    <meta property="og:title" content="Terms of Service - Scalpel | Advanced Bulk File Renamer">
+    <meta property="og:description" content="Terms of Service for Scalpel - Learn about the rules and guidelines for using our bulk file renaming tool.">
+    <meta property="og:image" content="https://glitchyn.online/images/Scalpel_logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://glitchyn.online/terms-of-service.html">
+    <meta name="twitter:title" content="Terms of Service - Scalpel | Advanced Bulk File Renamer">
+    <meta name="twitter:description" content="Terms of Service for Scalpel - Learn about the rules and guidelines for using our bulk file renaming tool.">
+    <meta name="twitter:image" content="https://glitchyn.online/images/Scalpel_logo.png">
+    <style>
+        /* Mobile logo and button adjustments */
+        @media (max-width: 900px) {
+            .logo img {
+                display: none !important;
+            }
+            .logo-text {
+                display: block !important;
+                font-size: 2rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .try-button {
+                display: none !important;
+            }
+        }
+        .burger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: none;
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border-radius: 12px;
+            box-shadow: none;
+            cursor: pointer;
+            z-index: 2001;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+        .burger img {
+            width: 32px;
+            height: 32px;
+            display: block;
+            border-radius: 10px;
+        }
+        .burger span { display: none; }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 240px;
+            background: var(--crystal-bg);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        .sidebar .close-btn {
+            align-self: flex-end;
+            font-size: 2rem;
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        .sidebar .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .sidebar .sidebar-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            transition: color 0.2s;
+        }
+        .sidebar .sidebar-links a:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 900px) {
+            .burger {
+                display: flex;
+            }
+            .nav-links {
+                display: none !important;
+            }
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none !important;
+            }
+        }
+        /* Burger menu styles */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background: var(--crystal-bg);
+                flex-direction: column;
+                gap: 0;
+                width: 200px;
+                box-shadow: var(--shadow);
+                border-radius: 0 0 10px 10px;
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .burger {
+                display: flex;
+            }
+        }
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --primary-light: rgba(52, 152, 219, 0.2);
+            --secondary: #27ae60;
+            --secondary-dark: #219653;
+            --dark: #0a1929;
+            --darker: #07121e;
+            --dark-light: #132842;
+            --light: #ecf0f1;
+            --gray: #7f8c8d;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-light: 0 4px 12px rgba(52, 152, 219, 0.2);
+            --transition: all 0.3s ease;
+            --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
+            --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 900px) {
+            html, body {
+                overflow-x: hidden !important;
+            }
+            .container {
+                padding: 0 6px;
+                max-width: 100vw;
+            }
+        }
+        
+        header {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: var(--crystal-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .try-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .try-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .link:hover {
+            color: #3498db;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content-section {
+            padding: 80px 0;
+            background: var(--dark);
+            position: relative;
+        }
+        
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+        }
+        
+        .content-card {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: var(--crystal-border);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(52, 152, 219, 0.4);
+        }
+        
+        .content-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            text-align: center;
+        }
+        
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: var(--light);
+            border-bottom: 1px solid rgba(52, 152, 219, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .content-card h4 {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            color: var(--light);
+        }
+        
+        .content-card p {
+            margin-bottom: 15px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        .content-card ul, .content-card ol {
+            margin: 15px 0 15px 30px;
+            color: var(--gray);
+        }
+        
+        .content-card li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .content-card strong {
+            color: var(--light);
+        }
+        
+        .content-card .note {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .last-updated {
+            text-align: center;
+            color: var(--gray);
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background: var(--darker);
+            color: white;
+            padding: 50px 0 20px;
+            border-top: var(--crystal-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .content-card {
+                padding: 25px;
+            }
+            
+            .content-card h2 {
+                font-size: 2rem;
+            }
+            
+            .content-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-text">Scalpel</div>
+                </div>
+                <div class="burger" id="burgerMenu">
+                    <img src="images/burger.png" alt="Menu">
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html">Home</a>
+                    <a href="learn-more.html">How It Works</a>
+                    <a href="pricing.html">Pricing</a>
+                    <a href="feedback.html">Feedback</a>
+                    <a href="https://guns.lol/lionshaft">About the Creator</a>
+                </div>
+                <a href="index.html" class="try-button">Try for Free</a>
+                <nav class="sidebar" id="sidebarMenu">
+                    <button class="close-btn" id="closeSidebar" aria-label="Close sidebar">&times;</button>
+                    <div class="sidebar-links">
+                        <a href="index.html">Home</a>
+                        <a href="learn-more.html">How It Works</a>
+                        <a href="pricing.html">Pricing</a>
+                        <a href="feedback.html">Feedback</a>
+                        <a href="https://guns.lol/lionshaft">About the Creator</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Terms of Service</h1>
+            <p>Please read these terms carefully before using Scalpel, our bulk file renaming tool.</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <div class="last-updated">Last Updated: September 29, 2025</div>
+                
+                <h2>Terms of Service for Scalpel</h2>
+                
+                <div class="note">
+                    <strong>Important:</strong> By using Scalpel, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not use our service.
+                </div>
+                
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using Scalpel (the "Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this Service.</p>
+                
+                <h3>2. Description of Service</h3>
+                <p>Scalpel is a web-based bulk file renaming tool that operates entirely in your web browser. Key features include:</p>
+                <ul>
+                    <li><strong>Client-side processing:</strong> All file processing occurs locally on your device</li>
+                    <li><strong>No file uploads:</strong> Your files are never sent to our servers</li>
+                    <li><strong>Immediate download:</strong> Processed files are downloaded directly to your device</li>
+                    <li><strong>Free service:</strong> Currently available at no cost</li>
+                </ul>
+                
+                <h3>3. User Responsibilities and Acceptable Use</h3>
+                <p>You agree not to use the Service for any unlawful purpose or in any way that violates these terms. You are solely responsible for the files you process and their content.</p>
+                
+                <h4>Prohibited activities include, but are not limited to:</h4>
+                <ul>
+                    <li>Using the Service to process files that infringe on intellectual property rights, copyrights, or trademarks</li>
+                    <li>Processing malicious software, viruses, malware, or any harmful content</li>
+                    <li>Attempting to disrupt, overload, or interfere with the Service's functionality</li>
+                    <li>Using the Service for any illegal activities or to process illegal content</li>
+                    <li>Reverse engineering, decompiling, or attempting to extract the source code of the Service</li>
+                </ul>
+                
+                <h3>4. Disclaimer of Warranties</h3>
+                <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.</p>
+                
+                <p>We do not guarantee that:</p>
+                <ul>
+                    <li>The Service will be uninterrupted or error-free</li>
+                    <li>The Service will meet your specific requirements</li>
+                    <li>The results from using the Service will be accurate or reliable</li>
+                    <li>Any errors in the Service will be corrected</li>
+                </ul>
+                
+                <h3>5. Limitation of Liability</h3>
+                <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:</p>
+                
+                <ul>
+                    <li>Your access to or use of or inability to access or use the Service</li>
+                    <li>Any conduct or content of any third party on the Service</li>
+                    <li>Any content obtained from the Service</li>
+                    <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>Data Responsibility:</strong> You are solely responsible for backing up your files before processing. We are not responsible for any data loss, file corruption, or unintended modifications that may occur during the file renaming process.
+                </div>
+                
+                <h3>6. Intellectual Property</h3>
+                <p>The Scalpel web application, including its source code, design, and functionality, is protected by intellectual property rights.</p>
+                
+                <h4>Open Source Licensing:</h4>
+                <ul>
+                    <li><a href="https://github.com/Lionshaft-pixel/Scalpel" target="_blank"><strong class="link">Scalpel</strong></a><strong>:</strong> Licensed under the MIT License</li>
+                </ul>
+                
+                <p>You may view the source code and contribute to the project according to the terms of the respective open-source licenses.</p>
+                
+                <h3>7. Future Service Changes</h3>
+                <p>We reserve the right to:</p>
+                <ul>
+                    <li>Modify or discontinue the Service (or any part thereof) with or without notice</li>
+                    <li>Introduce premium features, subscription models, or paid tiers in the future</li>
+                    <li>Change pricing structures with reasonable advance notice to users</li>
+                    <li>Update these Terms of Service as needed</li>
+                </ul>
+                
+                <h3>8. Termination</h3>
+                <p>We may terminate or suspend your access to the Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+                
+                <h3>9. Governing Law</h3>
+                <p>These Terms shall be governed and construed in accordance with the laws of India, without regard to its conflict of law provisions. Any disputes arising from these Terms or your use of the Service shall be subject to the exclusive jurisdiction of the courts located in India.</p>
+                
+                <h3>10. Changes to Terms</h3>
+                <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+                
+                <h3>11. Contact Information</h3>
+                <p>If you have any questions about these Terms of Service, please contact us through our <a href="feedback.html">feedback form</a>.</p>
+                
+                <div class="note">
+                    <strong>By using Scalpel, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Scalpel</h3>
+                    <p>The ultimate bulk file renaming tool for professionals and enthusiasts.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="learn-more.html">How It Works</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="https://guns.lol/lionshaft">About the Creator</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms-and-conditions.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Scalpel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const closeSidebar = document.getElementById('closeSidebar');
+        
+        burgerMenu.addEventListener('click', () => {
+            sidebarMenu.classList.add('active');
+        });
+        
+        closeSidebar.addEventListener('click', () => {
+            sidebarMenu.classList.remove('active');
+        });
+        
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebarMenu.contains(e.target) && !burgerMenu.contains(e.target)) {
+                sidebarMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

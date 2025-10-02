@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalpel - Advanced Bulk File Renamer</title>
+    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --primary-light: rgba(52, 152, 219, 0.2);
+            --secondary: #27ae60;
+            --secondary-dark: #219653;
+            --dark: #0a1929;
+            --darker: #07121e;
+            --dark-light: #132842;
+            --light: #ecf0f1;
+            --gray: #7f8c8d;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-light: 0 4px 12px rgba(52, 152, 219, 0.2);
+            --transition: all 0.3s ease;
+            --crystal-bg: linear-gradient(135deg, rgba(10, 25, 41, 0.85) 0%, rgba(15, 40, 70, 0.85) 100%);
+            --crystal-border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Mobile-specific container adjustments */
+        @media (max-width: 900px) {
+            html, body {
+                overflow-x: hidden !important;
+            }
+            .container {
+                padding: 0 6px;
+                max-width: 100vw;
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            border-bottom: var(--crystal-border);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .try-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-light);
+        }
+
+        .try-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* User menu */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--dark-light);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            width: 200px;
+            z-index: 101;
+            display: none;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .user-dropdown a:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Main content */
+        header {
+            text-align: center;
+            padding: 60px 0 30px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, #4db8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--gray);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+        }
+
+        .left-panel {
+            flex: 1;
+        }
+
+        .right-panel {
+            flex: 1;
+        }
+
+        /* Drop zone */
+        .drop-zone {
+            border: 2px dashed rgba(52, 152, 219, 0.5);
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: var(--transition);
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+        }
+
+        .drop-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .drop-zone.file-added {
+            border-color: var(--secondary);
+            background: rgba(39, 174, 96, 0.1);
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .icon-xl {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .browse-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .browse-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* File count */
+        .file-count {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            color: var(--gray);
+        }
+
+        /* Options */
+        .options {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            border: var(--crystal-border);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+
+        .options input[type="text"],
+        .options input[type="number"],
+        .options select {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .toggle-advanced {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .toggle-advanced:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .advanced-options {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Preview */
+        .preview-container {
+            background: var(--crystal-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            border: var(--crystal-border);
+            /* No scroll, sticky, or top here; let preview-content handle it */
+            transition: var(--transition);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /* No sticky positioning; remain in normal flow */
+            background: var(--crystal-bg);
+            z-index: 10;
+        }
+
+        .preview-content {
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .file-preview {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .file-preview:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .file-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+
+        .original-name {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .delete-file {
+            color: var(--danger);
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .delete-file:hover {
+            transform: scale(1.1);
+        }
+
+        .new-name {
+            font-size: 1rem;
+            color: var(--light);
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-danger {
+            background: rgba(231, 76, 60, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-full {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-lg {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--dark-light);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: var(--shadow);
+            border: var(--crystal-border);
+        }
+
+        .close {
+            color: var(--gray);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1;
+        }
+
+        .close:hover {
+            color: var(--light);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--light);
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+        }
+
+        .modal button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .modal p {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--gray);
+        }
+
+        .modal a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast.info {
+            background-color: var(--primary);
+        }
+
+        .toast.success {
+            background-color: var(--secondary);
+        }
+
+        .toast.error {
+            background-color: var(--danger);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        /* Spinner */
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav-left,
+            .nav-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .preview-container {
+                position: relative;
+                top: 0;
+            }
+            .preview-content {
+                max-height: 220px;
+                overflow-y: auto;
+            }
+        }
+
+        /* Blue custom scrollbar for all browsers */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3498db #101828;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #101828;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: #101828;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <nav class="navbar">
+        <div class="nav-left"><br>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="feedback.html" class="nav-link">Feedback</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Scalpel</h1>
+            <p class="tagline">Advanced bulk file renaming with precision</p>
+        </header>
+
+        <div class="main-content">
+            <div class="left-panel">
+                
+                <div class="drop-zone" id="dropZone">
+                    <svg class="icon icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Drag & Drop your files here</p>
+                    <p>or</p>
+                    <button class="browse-btn" id="browseBtn">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        Browse Files
+                    </button>
+                    <input type="file" id="fileInput" multiple class="file-input">
+                </div>
+
+                <div class="file-count" id="fileCount">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                        <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    <span>No files selected</span>
+                </div>
+
+                
+                <div class="options" id="optionsSection">
+                    <div class="option-group">
+                        <div class="option-title">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            Naming Pattern
+                        </div>
+                        <label for="baseName">Base Name:</label>
+                        <input type="text" id="baseName" placeholder="e.g., my_vacation">
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="addNumbering" checked>
+                                Add Numbering (01, 02, 03...)
+                            </label>
+                        </div>
+
+                        <div id="numberingOptions">
+                            <label for="startNumber">Start Number:</label>
+                            <input type="number" id="startNumber" value="1" min="1">
+
+                            <label for="numberDigits">Number of Digits:</label>
+                            <input type="number" id="numberDigits" value="2" min="1" max="10">
+
+                            <label for="numberSeparator">Separator:</label>
+                            <input type="text" id="numberSeparator" value="_" maxlength="3">
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option-title">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Additional Options
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="changeExtension">
+                                Change file extension
+                            </label>
+                        </div>
+
+                        <div id="extensionOptions">
+                            <label for="newExtension">New Extension:</label>
+                            <input type="text" id="newExtension" placeholder="e.g., jpg">
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="addPrefix">
+                                Add Prefix
+                            </label>
+                        </div>
+
+                        <div id="prefixOptions">
+                            <label for="prefixText">Prefix Text:</label>
+                            <input type="text" id="prefixText" placeholder="e.g., IMG_">
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="addSuffix">
+                                Add Suffix
+                            </label>
+                        </div>
+
+                        <div id="suffixOptions">
+                            <label for="suffixText">Suffix Text:</label>
+                            <input type="text" id="suffixText" placeholder="e.g., _edited">
+                        </div>
+                    </div>
+
+                    <button class="toggle-advanced" id="toggleAdvanced">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        Advanced Options
+                    </button>
+
+                    <div class="advanced-options" id="advancedOptions">
+                        <div class="option-group">
+                            <div class="option-title">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                                Text Modification
+                            </div>
+
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="convertCase">
+                                    Convert Case
+                                </label>
+                            </div>
+
+                            <div id="caseOptions">
+                                <label for="caseType">Case Type:</label>
+                                <select id="caseType">
+                                    <option value="lowercase">lowercase</option>
+                                    <option value="UPPERCASE">UPPERCASE</option>
+                                    <option value="Title Case">Title Case</option>
+                                    <option value="Sentence case">Sentence case</option>
+                                </select>
+                            </div>
+
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="findReplace">
+                                    Find and Replace
+                                </label>
+                            </div>
+
+                            <div id="findReplaceOptions">
+                                <label for="findText">Find:</label>
+                                <input type="text" id="findText" placeholder="Text to find">
+
+                                <label for="replaceText">Replace With:</label>
+                                <input type="text" id="replaceText" placeholder="Replacement text">
+
+                                <div class="checkbox-group">
+                                    <label>
+                                        <input type="checkbox" id="matchCase">
+                                        Match case
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <div class="option-title">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                                </svg>
+                                Sorting
+                            </div>
+
+                            <label for="sortOrder">Sort Files By:</label>
+                            <select id="sortOrder">
+                                <option value="original">Original Order</option>
+                                <option value="name">Name (A-Z)</option>
+                                <option value="nameDesc">Name (Z-A)</option>
+                                <option value="size">Size (Smallest First)</option>
+                                <option value="sizeDesc">Size (Largest First)</option>
+                                <option value="type">File Type</option>
+                                <option value="date">Date Modified (Oldest First)</option>
+                                <option value="dateDesc">Date Modified (Newest First)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-header">
+                        <span>Preview</span>
+                        <span id="previewCount">0 files</span>
+                    </div>
+                    <div class="preview-content" id="previewArea">
+                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
+                            Files will appear here after selection
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons" style="margin-top: 18px;">
+                    <button id="processBtn" class="btn btn-primary btn-lg btn-full" disabled>
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Process & Download
+                    </button>
+                    <button id="resetBtn" class="btn btn-danger">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="authForms">
+                    <div id="loginForm">
+                        <h2>Login to Your Account</h2>
+                        <form id="loginFormElement">
+                            <input type="email" placeholder="Email" required>
+                            <input type="password" placeholder="Password" required>
+                            <button type="submit">Login</button>
+                        </form>
+                        <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+                    </div>
+                    <div id="registerForm" style="display:none">
+                        <h2>Create an Account</h2>
+                        <form id="registerFormElement">
+                            <input type="text" placeholder="Full Name" required>
+                            <input type="email" placeholder="Email" required>
+                            <input type="password" placeholder="Password" required>
+                            <button type="submit">Register</button>
+                        </form>
+                        <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <script>
+            class ScalpelApp {
+                constructor() {
+                    this.files = [];
+                    this.FREE_FILE_LIMIT = 50; // Default fallback
+                    this.initializeElements();
+                    this.bindEvents();
+                    this.setupOptionToggles();
+                    this.setupUsageTracking();
+
+                    // ✅ NEW: Check user plan from server
+                    this.checkUserPlan();
+                }
+
+                async checkUserPlan() {
+                    try {
+                        const response = await fetch('/api/check-plan', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                userId: localStorage.getItem('scalpel_user_id') || 'anonymous'
+                            })
+                        });
+
+                        const planData = await response.json();
+
+                        // Update limits based on server response (fallback to existing values)
+                        if (planData && typeof planData.fileLimit === 'number') {
+                            this.FREE_FILE_LIMIT = planData.fileLimit;
+                        }
+
+                        // Ensure userUsage exists
+                        this.userUsage = this.userUsage || { filesProcessed: 0 };
+                        this.userUsage.filesProcessed = typeof planData.filesUsed === 'number' ? planData.filesUsed : this.userUsage.filesProcessed;
+
+                        this.updateUsageDisplay();
+                        return planData;
+                    } catch (error) {
+                        console.error('Plan check failed:', error);
+                        // Fallback to client-side limits
+                        return { plan: 'free', fileLimit: 50, filesUsed: 0 };
+                    }
+                }
+
+                setupUsageTracking() {
+                    // Initialize or get user's file usage from localStorage
+                    this.userUsage = JSON.parse(localStorage.getItem('scalpel_usage') || '{"filesProcessed": 0}');
+                    this.updateUsageDisplay();
+                }
+
+                updateUsageDisplay() {
+                    const remaining = this.FREE_FILE_LIMIT - this.userUsage.filesProcessed;
+                    const usageText = `${this.userUsage.filesProcessed}/${this.FREE_FILE_LIMIT} files used this session`;
+                    
+                    // Create or update usage display
+                    let usageDisplay = document.getElementById('usageDisplay');
+                    if (!usageDisplay) {
+                        usageDisplay = document.createElement('div');
+                        usageDisplay.id = 'usageDisplay';
+                        usageDisplay.style.cssText = `
+                            background: var(--crystal-bg);
+                            padding: 10px 15px;
+                            border-radius: 8px;
+                            margin: 15px 0;
+                            text-align: center;
+                            border: var(--crystal-border);
+                            font-size: 0.9rem;
+                        `;
+                        this.fileCount.parentNode.insertBefore(usageDisplay, this.fileCount.nextSibling);
+                    }
+                    
+                    usageDisplay.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>${usageText}</span>
+                            <span style="color: ${remaining <= 10 ? 'var(--warning)' : 'var(--primary)'}">
+                                ${remaining} files remaining
+                            </span>
+                        </div>
+                        ${remaining <= 0 ? this.createUpgradeButton() : ''}
+                    `;
+                }
+
+                createUpgradeButton() {
+                    return `
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(39, 174, 96, 0.1); border-radius: 5px;">
+                            <p style="margin: 0 0 8px 0; color: var(--secondary);">
+                                <i class="fas fa-crown"></i> Free limit reached!
+                            </p>
+                            <a href="pricing.html" style="
+                                background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+                                color: white;
+                                border: none;
+                                padding: 12px 24px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-weight: 600;
+                                margin: 10px;
+                                text-decoration: none;
+                                display: inline-block;
+                            ">
+                                <i class="fas fa-rocket"></i> Upgrade to Pro - $3
+                            </a>
+                            <p style="margin: 8px 0 0 0; font-size: 0.8rem; color: var(--gray);">
+                                Unlimited files + Regex support
+                            </p>
+                        </div>
+                    `;
+                }
+
+                checkFileLimit() {
+                    const remaining = this.FREE_FILE_LIMIT - this.userUsage.filesProcessed;
+                    return remaining > 0;
+                }
+
+                incrementUsage() {
+                    this.userUsage.filesProcessed++;
+                    localStorage.setItem('scalpel_usage', JSON.stringify(this.userUsage));
+                    this.updateUsageDisplay();
+                }
+
+                resetUsage() {
+                    this.userUsage = { filesProcessed: 0 };
+                    localStorage.setItem('scalpel_usage', JSON.stringify(this.userUsage));
+                    this.updateUsageDisplay();
+                }
+
+                initializeElements() {
+                    // UI Elements
+                    this.dropZone = document.getElementById('dropZone');
+                    this.fileInput = document.getElementById('fileInput');
+                    this.browseBtn = document.getElementById('browseBtn');
+                    this.optionsSection = document.getElementById('optionsSection');
+                    this.previewArea = document.getElementById('previewArea');
+                    this.processBtn = document.getElementById('processBtn');
+                    this.resetBtn = document.getElementById('resetBtn');
+                    this.fileCount = document.getElementById('fileCount');
+                    this.previewCount = document.getElementById('previewCount');
+                    this.toast = document.getElementById('toast');
+                    this.previewContainer = document.getElementById('previewContainer');
+
+                    // Option elements
+                    this.baseNameInput = document.getElementById('baseName');
+                    this.addNumberingCheckbox = document.getElementById('addNumbering');
+                    this.startNumberInput = document.getElementById('startNumber');
+                    this.numberDigitsInput = document.getElementById('numberDigits');
+                    this.numberSeparatorInput = document.getElementById('numberSeparator');
+                    this.changeExtensionCheckbox = document.getElementById('changeExtension');
+                    this.newExtensionInput = document.getElementById('newExtension');
+                    this.addPrefixCheckbox = document.getElementById('addPrefix');
+                    this.prefixTextInput = document.getElementById('prefixText');
+                    this.addSuffixCheckbox = document.getElementById('addSuffix');
+                    this.suffixTextInput = document.getElementById('suffixText');
+                    this.convertCaseCheckbox = document.getElementById('convertCase');
+                    this.caseTypeSelect = document.getElementById('caseType');
+                    this.findReplaceCheckbox = document.getElementById('findReplace');
+                    this.findTextInput = document.getElementById('findText');
+                    this.replaceTextInput = document.getElementById('replaceText');
+                    this.matchCaseCheckbox = document.getElementById('matchCase');
+                    this.sortOrderSelect = document.getElementById('sortOrder');
+
+                    // Advanced options
+                    this.toggleAdvancedBtn = document.getElementById('toggleAdvanced');
+                    this.advancedOptions = document.getElementById('advancedOptions');
+                    this.numberingOptions = document.getElementById('numberingOptions');
+                    this.extensionOptions = document.getElementById('extensionOptions');
+                    this.prefixOptions = document.getElementById('prefixOptions');
+                    this.suffixOptions = document.getElementById('suffixOptions');
+                    this.caseOptions = document.getElementById('caseOptions');
+                    this.findReplaceOptions = document.getElementById('findReplaceOptions');
+                }
+
+                bindEvents() {
+                    // File selection - FIXED: Properly connect browse button to file input
+                    this.browseBtn.addEventListener('click', () => {
+                        this.fileInput.click();
+                    });
+
+                    this.fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+
+                    // Drag and drop
+                    this.dropZone.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        this.dropZone.classList.add('dragover');
+                    });
+
+                    this.dropZone.addEventListener('dragleave', () => {
+                        this.dropZone.classList.remove('dragover');
+                    });
+
+                    this.dropZone.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        this.dropZone.classList.remove('dragover');
+                        this.handleFiles(e.dataTransfer.files);
+                    });
+
+                    // Options changes
+                    this.baseNameInput.addEventListener('input', () => this.updatePreview());
+                    this.addNumberingCheckbox.addEventListener('change', () => this.updatePreview());
+                    this.startNumberInput.addEventListener('input', () => this.updatePreview());
+                    this.numberDigitsInput.addEventListener('input', () => this.updatePreview());
+                    this.numberSeparatorInput.addEventListener('input', () => this.updatePreview());
+                    this.changeExtensionCheckbox.addEventListener('change', () => this.toggleExtensionOptions());
+                    this.newExtensionInput.addEventListener('input', () => this.updatePreview());
+                    this.addPrefixCheckbox.addEventListener('change', () => this.togglePrefixOptions());
+                    this.prefixTextInput.addEventListener('input', () => this.updatePreview());
+                    this.addSuffixCheckbox.addEventListener('change', () => this.toggleSuffixOptions());
+                    this.suffixTextInput.addEventListener('input', () => this.updatePreview());
+                    this.convertCaseCheckbox.addEventListener('change', () => this.toggleCaseOptions());
+                    this.caseTypeSelect.addEventListener('change', () => this.updatePreview());
+                    this.findReplaceCheckbox.addEventListener('change', () => this.toggleFindReplaceOptions());
+                    this.findTextInput.addEventListener('input', () => this.updatePreview());
+                    this.replaceTextInput.addEventListener('input', () => this.updatePreview());
+                    this.matchCaseCheckbox.addEventListener('change', () => this.updatePreview());
+                    this.sortOrderSelect.addEventListener('change', () => this.sortFiles());
+
+                    // Action buttons
+                    this.processBtn.addEventListener('click', () => this.processFiles());
+                    this.resetBtn.addEventListener('click', () => this.resetApp());
+                }
+
+                setupOptionToggles() {
+                    // Advanced options toggle
+                    this.toggleAdvancedBtn.addEventListener('click', () => {
+                        const isHidden = this.advancedOptions.style.display === 'none';
+                        this.advancedOptions.style.display = isHidden ? 'block' : 'none';
+
+                        this.toggleAdvancedBtn.innerHTML = `
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="${isHidden ? '18 15 12 9 6 15' : '6 9 12 15 18 9'}"></polyline>
+                        </svg>
+                        ${isHidden ? 'Hide Advanced Options' : 'Advanced Options'}
+                    `;
+                    });
+
+                    // Option toggles
+                    this.addNumberingCheckbox.addEventListener('change', () => {
+                        this.numberingOptions.style.display = this.addNumberingCheckbox.checked ? 'block' : 'none';
+                    });
+
+                    this.changeExtensionCheckbox.addEventListener('change', () => {
+                        this.extensionOptions.style.display = this.changeExtensionCheckbox.checked ? 'block' : 'none';
+                    });
+
+                    this.addPrefixCheckbox.addEventListener('change', () => {
+                        this.prefixOptions.style.display = this.addPrefixCheckbox.checked ? 'block' : 'none';
+                    });
+
+                    this.addSuffixCheckbox.addEventListener('change', () => {
+                        this.suffixOptions.style.display = this.addSuffixCheckbox.checked ? 'block' : 'none';
+                    });
+
+                    this.convertCaseCheckbox.addEventListener('change', () => {
+                        this.caseOptions.style.display = this.convertCaseCheckbox.checked ? 'block' : 'none';
+                    });
+
+                    this.findReplaceCheckbox.addEventListener('change', () => {
+                        this.findReplaceOptions.style.display = this.findReplaceCheckbox.checked ? 'block' : 'none';
+                    });
+
+                    // Initialize visibility states
+                    this.numberingOptions.style.display = this.addNumberingCheckbox.checked ? 'block' : 'none';
+                    this.extensionOptions.style.display = 'none';
+                    this.prefixOptions.style.display = 'none';
+                    this.suffixOptions.style.display = 'none';
+                    this.caseOptions.style.display = 'none';
+                    this.findReplaceOptions.style.display = 'none';
+                    this.advancedOptions.style.display = 'none';
+                }
+
+                toggleExtensionOptions() {
+                    this.extensionOptions.style.display = this.changeExtensionCheckbox.checked ? 'block' : 'none';
+                    this.updatePreview();
+                }
+
+                togglePrefixOptions() {
+                    this.prefixOptions.style.display = this.addPrefixCheckbox.checked ? 'block' : 'none';
+                    this.updatePreview();
+                }
+
+                toggleSuffixOptions() {
+                    this.suffixOptions.style.display = this.addSuffixCheckbox.checked ? 'block' : 'none';
+                    this.updatePreview();
+                }
+
+                toggleCaseOptions() {
+                    this.caseOptions.style.display = this.convertCaseCheckbox.checked ? 'block' : 'none';
+                    this.updatePreview();
+                }
+
+                toggleFindReplaceOptions() {
+                    this.findReplaceOptions.style.display = this.findReplaceCheckbox.checked ? 'block' : 'none';
+                    this.updatePreview();
+                }
+
+                handleFiles(fileList) {
+                    if (!fileList || fileList.length === 0) return;
+
+                    // Check if user has reached file limit
+                    const remaining = this.FREE_FILE_LIMIT - this.userUsage.filesProcessed;
+                    if (remaining <= 0) {
+                        this.showToast(`Free limit reached! Upgrade to Pro for unlimited files.`, 'error');
+                        this.updateUsageDisplay(); // Make sure upgrade button is visible
+                        return;
+                    }
+
+                    // Limit files to remaining quota
+                    const availableSlots = Math.min(fileList.length, remaining);
+                    const limitedFiles = Array.from(fileList).slice(0, availableSlots);
+
+                    if (limitedFiles.length < fileList.length) {
+                        this.showToast(`Added ${limitedFiles.length} files (free limit: ${this.FREE_FILE_LIMIT} files)`, 'warning');
+                    }
+
+                    // Convert FileList to Array and add to our files
+                    this.files = [...this.files, ...limitedFiles];
+
+                    // Do NOT update usage counter here!
+                    // Usage will be updated after download completes.
+
+                    // Show options section if we have files
+                    if (this.files.length > 0) {
+                        this.optionsSection.style.display = '';
+                    }
+
+                    this.updateFileCount();
+                    this.updatePreview();
+                }
+
+                updateFileCount() {
+                    const count = this.files.length;
+                    this.fileCount.querySelector('span').textContent = `${count} file${count !== 1 ? 's' : ''} selected`;
+                    this.previewCount.textContent = `${count} file${count !== 1 ? 's' : ''}`;
+                    // Enable or disable process button based on file count
+                    if (this.processBtn) {
+                        this.processBtn.disabled = count === 0;
+                    }
+                }
+
+                sortFiles() {
+                    const sortBy = this.sortOrderSelect.value;
+
+                    switch (sortBy) {
+                        case 'name':
+                            this.files.sort((a, b) => a.name.localeCompare(b.name));
+                            break;
+                        case 'nameDesc':
+                            this.files.sort((a, b) => b.name.localeCompare(a.name));
+                            break;
+                        case 'size':
+                            this.files.sort((a, b) => a.size - b.size);
+                            break;
+                        case 'sizeDesc':
+                            this.files.sort((a, b) => b.size - a.size);
+                            break;
+                        case 'type':
+                            this.files.sort((a, b) => {
+                                const extA = a.name.split('.').pop() || '';
+                                const extB = b.name.split('.').pop() || '';
+                                return extA.localeCompare(extB);
+                            });
+                            break;
+                        case 'date':
+                            this.files.sort((a, b) => a.lastModified - b.lastModified);
+                            break;
+                        case 'dateDesc':
+                            this.files.sort((a, b) => b.lastModified - a.lastModified);
+                            break;
+                        // 'original' keeps the current order
+                    }
+
+                    this.updatePreview();
+                }
+
+                generateNewFilename(originalName, index) {
+                    let newName = '';
+                    const baseName = this.baseNameInput.value || 'file';
+                    const extension = originalName.split('.').pop();
+
+                    // Add prefix if enabled
+                    if (this.addPrefixCheckbox.checked && this.prefixTextInput.value) {
+                        newName += this.prefixTextInput.value;
+                    }
+
+                    // Add base name
+                    newName += baseName;
+
+                    // Add numbering if enabled
+                    if (this.addNumberingCheckbox.checked) {
+                        const startNum = parseInt(this.startNumberInput.value) || 1;
+                        const numDigits = parseInt(this.numberDigitsInput.value) || 2;
+                        const separator = this.numberSeparatorInput.value || '_';
+                        const number = (startNum + index).toString().padStart(numDigits, '0');
+                        newName += separator + number;
+                    }
+
+                    // Add suffix if enabled
+                    if (this.addSuffixCheckbox.checked && this.suffixTextInput.value) {
+                        newName += this.suffixTextInput.value;
+                    }
+
+                    // Apply find and replace if enabled
+                    if (this.findReplaceCheckbox.checked && this.findTextInput.value) {
+                        const findText = this.findTextInput.value;
+                        const replaceText = this.replaceTextInput.value || '';
+                        const flags = this.matchCaseCheckbox.checked ? 'g' : 'gi';
+                        const regex = new RegExp(findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                        newName = newName.replace(regex, replaceText);
+                    }
+
+                    // Apply case conversion if enabled
+                    if (this.convertCaseCheckbox.checked) {
+                        const caseType = this.caseTypeSelect.value;
+                        switch (caseType) {
+                            case 'lowercase':
+                                newName = newName.toLowerCase();
+                                break;
+                            case 'UPPERCASE':
+                                newName = newName.toUpperCase();
+                                break;
+                            case 'Title Case':
+                                newName = newName.replace(/\w\S*/g, (txt) => {
+                                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                                });
+                                break;
+                            case 'Sentence case':
+                                newName = newName.charAt(0).toUpperCase() + newName.slice(1).toLowerCase();
+                                break;
+                        }
+                    }
+
+                    // Add extension
+                    const newExtension = this.changeExtensionCheckbox.checked && this.newExtensionInput.value
+                        ? this.newExtensionInput.value
+                        : extension;
+
+                    newName += '.' + newExtension;
+
+                    return newName;
+                }
+
+                updatePreview() {
+                    if (this.files.length === 0) {
+                        this.previewArea.innerHTML = `
+                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
+                            Files will appear here after selection
+                        </div>
+                    `;
+                        return;
+                    }
+
+                    let previewHTML = '';
+
+                    this.files.forEach((file, index) => {
+                        const newName = this.generateNewFilename(file.name, index);
+
+                        previewHTML += `
+                        <div class="file-preview" data-index="${index}">
+                            <div class="file-header">
+                                <div class="original-name" title="${file.name}">${file.name}</div>
+                                <div class="delete-file" onclick="scalpelApp.removeFile(${index})">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                            </div>
+                            <div class="new-name" title="${newName}">${newName}</div>
+                        </div>
+                    `;
+                    });
+
+                    this.previewArea.innerHTML = previewHTML;
+                }
+
+                removeFile(index) {
+                    if (index >= 0 && index < this.files.length) {
+                        this.files.splice(index, 1);
+
+                        // Update UI
+                        this.updateFileCount();
+                        this.updatePreview();
+
+                        // Disable process button if no files left
+                        if (this.files.length === 0) {
+                            this.processBtn.disabled = true;
+                            this.optionsSection.style.display = 'none';
+                        }
+
+                        this.showToast('File removed');
+                    }
+                }
+
+                async processFiles() {
+                    if (this.files.length === 0) {
+                        this.showToast('No files to process', 'error');
+                        return;
+                    }
+
+                    try {
+                        // Disable UI
+                        this.processBtn.disabled = true;
+                        this.processBtn.innerHTML = `<svg class="icon spinner">...</svg> Processing...`;
+
+                        // Prepare FormData
+                        const form = new FormData();
+                        this.files.forEach((f) => form.append('files', f));
+                        const options = {
+                            baseName: this.baseNameInput.value || 'renamed',
+                            addNumbering: this.addNumberingCheckbox.checked,
+                            startNumber: this.startNumberInput.value,
+                            numberDigits: this.numberDigitsInput.value,
+                            numberSeparator: this.numberSeparatorInput.value,
+                            addPrefix: this.addPrefixCheckbox.checked,
+                            prefixText: this.prefixTextInput.value,
+                            addSuffix: this.addSuffixCheckbox.checked,
+                            suffixText: this.suffixTextInput.value,
+                            changeExtension: this.changeExtensionCheckbox.checked,
+                            newExtension: this.newExtensionInput.value,
+                            findReplace: this.findReplaceCheckbox.checked,
+                            findText: this.findTextInput.value,
+                            replaceText: this.replaceTextInput.value,
+                            matchCase: this.matchCaseCheckbox.checked,
+                            convertCase: this.convertCaseCheckbox.checked,
+                            caseType: this.caseTypeSelect.value,
+                        };
+                        form.append('options', JSON.stringify(options));
+
+                        // Send to server; include credentials so HttpOnly cookie is sent
+                        const resp = await fetch('/api/process-files', {
+                            method: 'POST',
+                            body: form,
+                            credentials: 'include'
+                        });
+
+                        if (!resp.ok) {
+                            const err = await resp.json().catch(()=>({error: 'Unknown error'}));
+                            this.showToast(err.error || err.message || 'Server rejected processing', 'error');
+                            return;
+                        }
+
+                        // Streamed ZIP blob
+                        const blob = await resp.blob();
+                        const downloadUrl = URL.createObjectURL(blob);
+                        const fname = resp.headers.get('content-disposition')?.match(/filename="(.+)"/)?.[1] || `${options.baseName}_${Date.now()}.zip`;
+
+                        const a = document.createElement('a');
+                        a.href = downloadUrl;
+                        a.download = fname;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        URL.revokeObjectURL(downloadUrl);
+
+                        this.showToast('Files processed and downloaded', 'success');
+
+                        // Clear selected files but keep usage (server tracked)
+                        this.files = [];
+                        this.updateFileCount();
+                        this.updatePreview();
+                    } catch (err) {
+                        console.error(err);
+                        this.showToast('Processing failed', 'error');
+                    } finally {
+                        this.processBtn.disabled = false;
+                        this.processBtn.innerHTML = `<svg class="icon">...</svg> Process & Download`;
+                    }
+                }
+
+                cleanupDownload() {
+                    // Revoke any existing object URLs to prevent memory leaks
+                    if (this.downloadUrl) {
+                        URL.revokeObjectURL(this.downloadUrl);
+                        this.downloadUrl = null;
+                    }
+
+                    // Remove any existing download links
+                    const existingLinks = document.querySelectorAll('a.download-link');
+                    existingLinks.forEach(link => {
+                        if (link.parentNode) {
+                            link.parentNode.removeChild(link);
+                        }
+                    });
+                }
+
+                resetApp() {
+                    // Only clear selected files and preview.
+                    // Do NOT reset usage or user plan/limits here.
+                    this.files = [];
+                    this.fileInput.value = '';
+                    this.previewArea.innerHTML = `
+                        <div style="color: #7f8c8d; text-align: center; padding: 20px;">
+                            Files will appear here after selection
+                        </div>
+                    `;
+                    this.processBtn.disabled = true;
+                    this.optionsSection.style.display = 'none';
+                    this.updateFileCount();
+
+                    // Keep all option inputs and usage counters intact.
+                    this.showToast('Files cleared');
+                 }
+
+                showToast(message, type = 'info') {
+                    this.toast.textContent = message;
+                    this.toast.className = `toast ${type}`;
+                    this.toast.classList.add('show');
+
+                    setTimeout(() => {
+                        this.toast.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            function upgradeToPro() {
+                // Simple upgrade flow - you can replace this with Stripe later
+                const upgradeModal = `
+                    <div id="upgradeModal" style="
+                        position: fixed;
+                        top: 0; left: 0;
+                        width: 100%; height: 100%;
+                        background: rgba(0,0,0,0.8);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                    ">
+                        <div style="
+                            background: var(--dark-light);
+                            padding: 30px;
+                            border-radius: 10px;
+                            max-width: 400px;
+                            text-align: center;
+                        ">
+                            <h3>Upgrade to Scalpel Pro!</h3>
+                            <p>Get unlimited file processing and advanced features!</p>
+                            <div style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                                <h4>$$3 one-time payment</h4>
+                                <div style="text-align: left; margin: 15px 0;">
+                                    Unlimited files per session<br>
+                                    Regex pattern support<br>
+                                    Priority feature requests<br>
+                                    No more goddamn limits!
+                                </div>
+                            </div>
+                            
+                            <a href="pricing.html" style="
+                                background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+                                color: white;
+                                border: none;
+                                padding: 12px 24px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-weight: 600;
+                                margin: 10px;
+                                text-decoration: none;
+                                display: inline-block;
+                            ">
+                                <i class="fas fa-rocket"></i> Upgrade to Pro - $3
+                            </a>
+                            
+                            <button onclick="closeUpgradeModal()" style="
+                                background: transparent;
+                                color: var(--gray);
+                                border: 1px solid var(--gray);
+                                padding: 12px 24px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                margin: 10px;
+                            ">
+                                Maybe Later
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', upgradeModal);
+            }
+
+            function processUpgrade() {
+                // For now, just simulate upgrade - replace with real payment later
+                localStorage.setItem('scalpel_pro', 'true');
+                localStorage.setItem('scalpel_usage', JSON.stringify({filesProcessed: 0}));
+                closeUpgradeModal();
+                
+                if (window.scalpelApp) {
+                    window.scalpelApp.showToast('🎉 Welcome to Scalpel Pro! Limits removed.', 'success');
+                    window.scalpelApp.updateUsageDisplay();
+                }
+            }
+
+            function closeUpgradeModal() {
+                const modal = document.getElementById('upgradeModal');
+                if (modal) modal.remove();
+            }
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                window.scalpelApp = new ScalpelApp();
+            });
+
+            
+            let currentUser = null;
+
+            function showAuthModal() {
+                const modal = document.getElementById('authModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    document.getElementById('loginForm').style.display = 'block';
+                    document.getElementById('registerForm').style.display = 'none';
+                }
+            }
+
+            function toggleUserDropdown() {
+                const dropdown = document.getElementById('userDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            }
+
+            function logout() {
+                currentUser = null;
+                localStorage.removeItem('scalpelUser');
+                document.getElementById('authButton').style.display = 'block';
+                document.getElementById('userMenu').style.display = 'none';
+                document.getElementById('userDropdown').style.display = 'none';
+
+                if (window.scalpelApp && window.scalpelApp.showToast) {
+                    window.scalpelApp.showToast('Logged out successfully', 'info');
+                }
+            }
+
+            
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = document.getElementById('authModal');
+                const closeBtn = document.querySelector('.close');
+                const showRegister = document.getElementById('showRegister');
+                const showLogin = document.getElementById('showLogin');
+                const loginForm = document.getElementById('loginForm');
+                const registerForm = document.getElementById('registerForm');
+
+                if (closeBtn) {
+                    closeBtn.onclick = function () {
+                        modal.style.display = 'none';
+                    };
+                }
+
+                if (showRegister) {
+                    showRegister.onclick = function (e) {
+                        e.preventDefault();
+                        loginForm.style.display = 'none';
+                        registerForm.style.display = 'block';
+                    };
+                }
+
+                if (showLogin) {
+                    showLogin.onclick = function (e) {
+                        e.preventDefault();
+                        registerForm.style.display = 'none';
+                        loginForm.style.display = 'block';
+                    };
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+
+                // Check if user is logged in
+                const savedUser = localStorage.getItem('scalpelUser');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    document.getElementById('authButton').style.display = 'none';
+                    document.getElementById('userMenu').style.display = 'block';
+                    document.getElementById('userName').textContent = currentUser.name;
+                    document.getElementById('userPlan').textContent = currentUser.plan === 'pro' ? 'Pro Plan' : 'Free Plan';
+                }
+            });
+        </script><br>
+        <footer>Made with &#129505; by Lionshaft.</footer>
+</body>
+
+</html>
